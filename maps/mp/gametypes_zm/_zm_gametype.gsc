@@ -25,6 +25,10 @@
 
 main() //checked matches cerberus output
 {
+	if ( getdvar( "mapname" ) == "zm_transit" )
+	{
+		set_location_ents();
+	}
 	maps/mp/gametypes_zm/_globallogic::init();
 	maps/mp/gametypes_zm/_callbacksetup::setupcallbacks();
 	globallogic_setupdefault_zombiecallbacks();
@@ -1984,7 +1988,58 @@ blank()
 	//empty function
 }
 
+set_location_ents()
+{
+	ents = getEntArray();
+	door_ents = getentarray( "zombie_door", "targetname" );
+	switch ( getdvar( "ui_zm_mapstartlocation" ) )
+	{  
+		case "power":
+			foreach ( door in door_ents )
+			{
+				if ( isDefined( door_ents.targetname ) && door_ents.targetname == "zombie_door" )
+				{
+					if ( door_ents.script_noteworthy == "electric_door" )
+					{
+						door_ents.script_noteworthy = "electric_buyable_door";
+						door_ents.marked_for_deletion = 0;
+					}
+					else if ( door_ents.target == "pow_door_rr" )
+					{
+						door_ents.marked_for_deletion = 0;
+					}
+					else if ( isDefined( door_ents ) )
+					{
+						door_ents.marked_for_deletion = 1;
+					}
+				}
+			}
+			break;
+		case "diner":
+			foreach ( door in door_ents )
+			{
+				
+			}
+			break;
+		case "tunnel":
+			break;
+		case "cornfield":
+			break;
+	}
+	ents = getEntArray();
+	foreach ( ent in ents )
+	{
+		if ( is_true( ent.marked_for_deletion ) )
+		{
+			ent delete();
+		}
+	}
+}
 
+location_common_ent_deletion()
+{
+
+}
 
 
 
