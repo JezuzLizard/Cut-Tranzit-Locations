@@ -229,10 +229,11 @@ main() //checked changed to match cerberus output
 	maps/mp/_sticky_grenade::init();
 	level.level_specific_stats_init = ::init_transit_stats;
 	maps/mp/zombies/_load::main();
-
+	//Initialize cut locations
+	/////////////////////////////
 	register_perk_structs();
 	register_spawnpoint_structs();
-
+	/////////////////////////////
 	init_clientflags();
 	level thread transit_pathnode_spawning();
 	registerclientfield( "allplayers", "playerinfog", 1, 1, "int" );
@@ -402,7 +403,11 @@ main() //checked changed to match cerberus output
 	{
 		init_zones[ 3 ] = "zone_far_ext";
 		init_zones[ 4 ] = "zone_brn";
+		//Initialize cut location zones
+		////////////////////////////////////
 		init_zones[ 5 ] = "zone_pow";
+		init_zones[ 6 ] = "zone_amb_tunnel";
+		////////////////////////////////////
 	}
 	level thread maps/mp/zombies/_zm_zonemgr::manage_zones( init_zones );
 	if ( is_true( level.optimise_for_splitscreen ) )
@@ -1590,7 +1595,7 @@ transit_zone_init() //checked changed to match cerberus output
 	add_adjacent_zone( "zone_town_barber", "zone_town_west", "OnTowDoorBarber" );
 	add_adjacent_zone( "zone_far_ext", "zone_brn", "OnFarm_enter" );
 	add_adjacent_zone( "zone_far_ext", "zone_farm_house", "open_farmhouse" );
-	add_adjacent_zone( "zone_prr", "zone_pow", "OnPowDoorRR", 1 );
+	add_adjacent_zone( "zone_prr", "zone_pow", "always_on" );
 	add_adjacent_zone( "zone_pcr", "zone_prr", "OnPowDoorRR" );
 	add_adjacent_zone( "zone_pcr", "zone_pow_warehouse", "OnPowDoorWH" );
 	add_adjacent_zone( "zone_pow", "zone_pow_warehouse", "OnPowDoorWH" );
@@ -3258,6 +3263,8 @@ transit_special_weapon_magicbox_check( weapon ) //checked matches cerberus outpu
 	return 1;
 }
 
+//Begin cut locations functions
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 register_perk_structs()
 {
 	switch ( getDvar( "ui_zm_mapstartlocation" ) )
@@ -3291,7 +3298,7 @@ register_perk_structs()
 			break;
 		case "cornfield":
 			_register_survival_perk( "specialty_armorvest", "zombie_vending_jugg", ( 0, 179, 0 ), ( 13936, -649, -189 ) );
-			_register_survival_perk( "specialty_rof", "zombie_vending_doubletap2", ( 0, -137, 0 ), ( 12052, -1943, -160 ) );
+			_register_survival_perk( "specialty_rof", "zombie_vending_doubletap2", ( 0, 88, 0 ), ( 11399, 8159, -487 ) );
 			_register_survival_perk( "specialty_longersprint", "zombie_vending_marathon", ( 0, -35, 0 ), ( 10856, 7879, -576 ) );
 			_register_survival_perk( "specialty_scavenger", "zombie_vending_tombstone", ( 0, 90, 0 ), ( 13551, -1384, -188 ) );
 			_register_survival_perk( "specialty_weapupgrade", "p6_anim_zm_buildable_pap_on", ( 0, 162, 0 ), ( 12625, 7434, -755 ) );
@@ -3340,8 +3347,8 @@ register_spawnpoint_structs() //custom function
 			angles = array( ( 0, 40, 0 ), ( 0, 145, 0 ), ( 0, -131, 0 ), ( 0, -24, 0 ), ( 0, -178, 0 ), ( 0, -179, 0 ), ( 0, -177, 0 ), ( 0, -177, 0 ) );
 			break;
 		case "power":
-			coordinates = array( ( 11288, 7988, -550 ), ( 11284, 7760, -549 ), ( 10784, 7623, -584 ), ( 10866, 7473, -580 ),
-									( 10261, 8146, -580 ), ( 10595, 8055, -541 ), ( 10477, 7679, -567 ), ( 10165, 7879, -570 ) );
+			coordinates = array( ( 11257, 8233, -487 ), ( 11403, 8245, -487 ), ( 11381, 8374, -487), ( 11269, 8360, -487 ),
+									( 10871, 8433, -407 ), ( 10852, 8230, -407 ), ( 10641, 8228, -407 ), ( 10655, 8431, -407 ) );
 			angles = array( ( 0, -137, 0 ), ( 0, 177, 0 ), ( 0, -10, 0 ), ( 0, 21, 0 ), ( 0, -31, 0 ), ( 0, -43, 0 ), ( 0, -9, 0 ), ( 0, -15, 0 ) );
 			break;
 	}
