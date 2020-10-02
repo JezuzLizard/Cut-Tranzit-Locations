@@ -10,6 +10,7 @@
 #include maps/mp/zombies/_zm_unitrigger;
 #include maps/mp/zombies/_zm_weap_claymore;
 #include maps/mp/zombies/_zm_melee_weapon;
+#include maps/mp/zombies/_zm;
 
 treasure_chest_init()
 {
@@ -123,29 +124,29 @@ main()
 			_weapon_spawner( ( 0, 0, 0 ), ( -4280, -7486, -5 ), "m14_zm_fx", "m14_zm", "t6_wpn_ar_m14_world", "m14", "weapon_upgrade" );
 			_weapon_spawner( ( 0, 0, 0 ), ( -5085, -7807, -5 ), "rottweil72_zm_fx", "rottweil72_zm", "t6_wpn_shotty_olympia_world", "olympia", "weapon_upgrade" );
 			_weapon_spawner( ( 0, 180, 0 ), ( -3578, -7181, 0 ), "m16_zm_fx", "m16_zm", "t6_wpn_ar_m16a2_world", "m16", "weapon_upgrade" );
-			_weapon_spawner( ( 0, 1.00179, 0 ), ( -5489, -7982.7, 62 ), "mp5k_zm_fx", "mp5k_zm", "t6_wpn_smg_mp5_world", "mp5", "weapon_upgrade" );
+			_weapon_spawner( ( 0, 1, 0 ), ( -5489, -7982.7, 62 ), "mp5k_zm_fx", "mp5k_zm", "t6_wpn_smg_mp5_world", "mp5", "weapon_upgrade" );
 			_weapon_spawner( ( 0, 270, 0 ), ( -6399.2, -7938.5, 207.25 ), "tazer_knuckles_zm_fx", "tazer_knuckles_zm", "t6_wpn_taser_knuckles_world", "tazer_knuckles", "tazer_upgrade" );
 			break;
 		case "tunnel":
 			_weapon_spawner( ( 0, -86, 0 ), ( -11166, -2844, 247 ), "m14_zm_fx", "m14_zm", "t6_wpn_ar_m14_world", "m14", "weapon_upgrade" );
 			_weapon_spawner( ( 0, 83, 0 ), ( -10790, -1430, 247 ), "rottweil72_zm_fx", "rottweil72_zm", "t6_wpn_shotty_olympia_world", "olympia", "weapon_upgrade" );
-			_weapon_spawner( ( 0, 270, 0 ), ( -7045.8, 4132, -6 ), "m16_zm_fx", "m16_zm", "t6_wpn_ar_m16a2_world", "m16", "weapon_upgrade" );
+			_weapon_spawner( ( 0, 270, 0 ), ( -11839, -1695.1, 287 ), "m16_zm_fx", "m16_zm", "t6_wpn_ar_m16a2_world", "m16", "weapon_upgrade" );
 			_weapon_spawner( ( 0, 83, 0 ), ( -10625, -545, 247 ), "mp5k_zm_fx", "mp5k_zm", "t6_wpn_smg_mp5_world", "mp5", "weapon_upgrade" );
-			_weapon_spawner( ( 0, -93, 0 ), ( -11839, -2406, 283 ), "tazer_knuckles_zm_fx", "tazer_knuckles_zm", "t6_wpn_taser_knuckles_world", "tazer_knuckles", "tazer_upgrade" );
+			//_weapon_spawner( ( 0, -93, 0 ), ( -11839, -2406, 283 ), "tazer_knuckles_zm_fx", "tazer_knuckles_zm", "t6_wpn_taser_knuckles_world", "tazer_knuckles", "tazer_upgrade" );
 			break;
 		case "power":
-			_weapon_spawner( ( 0, 90, 0), ( 10559, 8226, -504 ), "m14_zm_fx", "m14_zm", "t6_wpn_ar_m14_world", "m14", "weapon_upgrade" );
+			//_weapon_spawner( ( 0, 90, 0), ( 10559, 8226, -504 ), "m14_zm_fx", "m14_zm", "t6_wpn_ar_m14_world", "m14", "weapon_upgrade" );
 			_weapon_spawner( ( 0, 170, 0 ), ( 11769, 7662, -701 ), "rottweil72_zm_fx", "rottweil72_zm", "t6_wpn_shotty_olympia_world", "olympia", "weapon_upgrade" );
 			_weapon_spawner( ( 0, 0, 0 ), ( 10859, 8146, -353 ), "m16_zm_fx", "m16_zm", "t6_wpn_ar_m16a2_world", "m16", "weapon_upgrade" );
 			_weapon_spawner( ( 0, 90, 0 ), ( 11452, 8692, -521 ), "mp5k_zm_fx", "mp5k_zm", "t6_wpn_smg_mp5_world", "mp5", "weapon_upgrade" );
-			_weapon_spawner( ( 0, 180, 0 ), ( -4280, -7486, -5 ), "bowie_knife_zm_fx", "bowie_knife_zm", "world_knife_bowie", "bowie_knife", "bowie_upgrade" );
+			//_weapon_spawner( ( 0, 180, 0 ), ( -4280, -7486, -5 ), "bowie_knife_zm_fx", "bowie_knife_zm", "world_knife_bowie", "bowie_knife", "bowie_upgrade" );
 			break;
 		case "cornfield":
-			_weapon_spawner( ( 0, -180, 0 ), ( 13603, -1282, -134 ), "claymore_zm_fx", "claymore_zm", "t6_wpn_claymore_world", "claymore", "claymore_purchase" );
+			//_weapon_spawner( ( 0, -180, 0 ), ( 13603, -1282, -134 ), "claymore_zm_fx", "claymore_zm", "t6_wpn_claymore_world", "claymore", "claymore_purchase" );
 			_weapon_spawner( ( 0, -90, 0 ), ( 13663, -1166, -134 ), "rottweil72_zm_fx", "rottweil72_zm", "t6_wpn_shotty_olympia_world", "olympia", "weapon_upgrade" );
-			_weapon_spawner( ( 0, 90, 0 ), ( 14092, -351, -133 ), "m16_zm_fx", "m16_zm", "t6_wpn_ar_m16a2_world", "m16", "weapon_upgrade" );
+			//_weapon_spawner( ( 0, 90, 0 ), ( 14092, -351, -133 ), "m16_zm_fx", "m16_zm", "t6_wpn_ar_m16a2_world", "m16", "weapon_upgrade" );
 			_weapon_spawner( ( 0, 90, 0 ), ( 13542, -764, -133 ), "mp5k_zm_fx", "mp5k_zm", "t6_wpn_smg_mp5_world", "mp5", "weapon_upgrade" );
-			_weapon_spawner( ( 0, 90, 0 ), ( 13502, -12, -125 ), "tazer_knuckles_zm_fx", "tazer_knuckles_zm", "t6_wpn_taser_knuckles_world", "tazer_knuckles", "tazer_upgrade" );
+			//_weapon_spawner( ( 0, 90, 0 ), ( 13502, -12, -125 ), "tazer_knuckles_zm_fx", "tazer_knuckles_zm", "t6_wpn_taser_knuckles_world", "tazer_knuckles", "tazer_upgrade" );
 			level thread increase_cornfield_zombie_speed();
 			break;
 	}
@@ -156,7 +157,9 @@ main()
 	level.enemy_location_override_func = ::enemy_location_override;
 	level.player_out_of_playable_area_monitor = 0;
 	flag_wait( "initial_blackscreen_passed" );
-	maps/mp/zombies/_zm_game_module::turn_power_on_and_open_doors();
+	//level.mixed_rounds_enabled = 1;
+	//level.round_spawn_func = ::round_spawning;
+	turn_power_on_and_open_doors();
 	flag_wait( "start_zombie_round_logic" );
 	wait 1;
 	level notify( "revive_on" );
@@ -211,7 +214,6 @@ _weapon_spawner( weapon_angles, weapon_coordinates, chalk_fx, weapon_name, weapo
 	weapon_spawn = spawnstruct();
 	weapon_spawn.angles = weapon_angles;
 	weapon_spawn.origin = weapon_coordinates;
-	if ( )
 	weapon_spawn.targetname = targetname;
 	weapon_spawn.zombie_weapon_upgrade = weapon_name;
 	weapon_spawn.model = weapon_model;
@@ -242,18 +244,18 @@ _weapon_spawner( weapon_angles, weapon_coordinates, chalk_fx, weapon_name, weapo
 	unitrigger_stub.cursor_hint = "HINT_NOICON";
 	if ( weapon_spawn.targetname == "weapon_upgrade" )
 	{
-		unitrigger_stub.cost = get_weapon_cost( spawn_list[ i ].zombie_weapon_upgrade );
+		unitrigger_stub.cost = get_weapon_cost( weapon_spawn.zombie_weapon_upgrade );
 		if ( !is_true( level.monolingustic_prompt_format ) )
 		{
-			unitrigger_stub.hint_string = get_weapon_hint( spawn_list[ i ].zombie_weapon_upgrade );
+			unitrigger_stub.hint_string = get_weapon_hint( weapon_spawn.zombie_weapon_upgrade );
 			unitrigger_stub.hint_parm1 = unitrigger_stub.cost;
 		}
 		else
 		{
-			unitrigger_stub.hint_parm1 = get_weapon_display_name( spawn_list[ i ].zombie_weapon_upgrade );
+			unitrigger_stub.hint_parm1 = get_weapon_display_name( weapon_spawn.zombie_weapon_upgrade );
 			if ( !isDefined( unitrigger_stub.hint_parm1 ) || unitrigger_stub.hint_parm1 == "" || unitrigger_stub.hint_parm1 == "none" )
 			{
-				unitrigger_stub.hint_parm1 = "missing weapon name " + spawn_list[ i ].zombie_weapon_upgrade;
+				unitrigger_stub.hint_parm1 = "missing weapon name " + weapon_spawn.zombie_weapon_upgrade;
 			}
 			unitrigger_stub.hint_parm2 = unitrigger_stub.cost;
 			unitrigger_stub.hint_string = &"ZOMBIE_WEAPONCOSTONLY";
@@ -343,15 +345,17 @@ _spawn_tranzit_barrier( barrier_coordinates, barrier_model, barrier_angles, not_
 	if ( !isDefined( level.survival_barriers ) )
 	{
 		level.survival_barriers = [];
+		level.survival_barriers_index = 0;
 	}
-	level.survival_barriers [ level.survival_barriers.size ] = spawn( "script_model", barrier_coordinates );
-	level.survival_barriers [ level.survival_barriers.size ] setModel( barrier_model );
-	level.survival_barriers [ level.survival_barriers.size ] rotateTo( barrier_angles, 0.1 );
-	level.survival_barriers [ level.survival_barriers.size ] disconnectPaths();  
+	level.survival_barriers[ level.survival_barriers_index ] = spawn( "script_model", barrier_coordinates );
+	level.survival_barriers[ level.survival_barriers_index ] setModel( barrier_model );
+	level.survival_barriers[ level.survival_barriers_index ] rotateTo( barrier_angles, 0.1 );
+	level.survival_barriers[ level.survival_barriers_index ] disconnectPaths();  
 	if ( is_true( not_solid ) )
 	{
-		barrier_ent notSolid();
+		level.survival_barriers[ level.survival_barriers_index ] notSolid();
 	}
+	level.survival_barriers_index++;
 }
 
 init_barriers_for_cut_locations() //custom function
@@ -419,4 +423,336 @@ zone_spawn_locations_override( spawn_locations, zone )
 			break;
 	}
 	return spawn_locations;
+}
+
+create_spawner_list( zkeys ) //modified function
+{
+	level.zombie_spawn_locations = [];
+	level.inert_locations = [];
+	level.enemy_dog_locations = [];
+	level.zombie_screecher_locations = [];
+	level.zombie_avogadro_locations = [];
+	level.quad_locations = [];
+	level.zombie_leaper_locations = [];
+	level.zombie_astro_locations = [];
+	level.zombie_brutus_locations = [];
+	level.zombie_mechz_locations = [];
+	level.zombie_napalm_locations = [];
+	for ( z = 0; z < zkeys.size; z++ )
+	{
+		zone = level.zones[ zkeys[ z ] ];
+		if ( zone.is_enabled && zone.is_active && zone.is_spawning_allowed )
+		{
+			for ( i = 0; i < zone.spawn_locations.size; i++ )
+			{
+				if ( zone.spawn_locations[ i ].origin == ( 8394, -2545, -205.16 ) )
+				{
+					zone.spawn_locations[ i ].is_enabled = 0;
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( 10015, 6931, -571.7 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( 10249.4, 7691.71, -569.875 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( 9339, 6411, -566.9 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( 9993.29, 7486.83, -582.875 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( 9914, 8408, -576 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( 9993.29, 7550, -582.875 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( 9429, 5281, -539.6 ) )
+				{
+					zone.spawn_locations[ i ].is_enabled = 0;
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( 10015, 6931, -571.7 ) )
+				{
+					zone.spawn_locations[ i ].is_enabled = 0;
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( 13019.1, 7382.5, -754 ) )
+				{
+					zone.spawn_locations[ i ].is_enabled = 0;
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -3825, -6576, -52.7 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -4061.03, -6754.44, -58.0897 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -3450, -6559, -51.9 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -4060.93, -6968.64, -65.3446 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -4165, -6098, -64 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -4239.78, -6902.81, -57.0494 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -5058, -5902, -73.4 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -4846.77, -6906.38, 54.8145 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -6462, -7159, -64 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -6201.18, -7107.83, -59.7182 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -5130, -6512, -35.4 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -5396.36, -6801.88, -60.0821 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -6531, -6613, -54.4 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -6116.62, -6586.81, -50.8905 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -5373, -6231, -51.9 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -4827.92, -7137.19, -62.9082 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -5752, -6230, -53.4 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -5572.47, -6426, -39.1894 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -5540, -6508, -42 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -5789.51, -6935.81, -57.875 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -11093 , 393 , 192 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -11431.3, -644.496, 192.125 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -10944, -3846, 221.14 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -11351.7, -1988.58, 184.125 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -11251, -4397, 200.02 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -11431.3, -644.496, 192.125 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -11334 , -5280, 212.7 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -11600.6, -1918.41, 192.125 );
+					zone.spawn_locations[ i ].script_noteworthy = "riser_location";
+				}
+				else if (zone.spawn_locations[ i ].origin == ( -10836, 1195, 209.7 ) )
+				{
+					zone.spawn_locations[ i ].origin = ( -11241.2, -1118.76, 184.125 );
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -10747, -63, 203.8 ) )
+				{
+					zone.spawn_locations[ i ].is_enabled = 0;
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -11347, -3134, 283.9 ) )
+				{
+					zone.spawn_locations[ i ].is_enabled = 0;
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -11447, -3424, 254.2 ) )
+				{
+					zone.spawn_locations[ i ].is_enabled = 0;
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -10761, 155, 236.8 ) )
+				{
+					zone.spawn_locations[ i ].is_enabled = 0;
+				}
+				else if ( zone.spawn_locations[ i ].origin == ( -11110, -2921, 195.79 ) )
+				{
+					zone.spawn_locations[ i ].is_enabled = 0;
+				}
+				if(zone.spawn_locations[ i ].is_enabled)
+				{
+					level.zombie_spawn_locations[ level.zombie_spawn_locations.size ] = zone.spawn_locations[ i ];
+				}
+			}
+			for ( x = 0; x < zone.dog_locations.size; x++ )
+			{
+				if ( zone.dog_locations[ x ].origin == ( -11428.5, 764.5, 220 ) )
+				{
+					zone.dog_locations[ x ].origin = ( -10952, -1950, 220 );
+				}
+				else if ( zone.dog_locations[ x ].origin == ( -11228.5, -4553, 205.7 ) )
+				{
+					zone.dog_locations[ x ].origin = ( -11550, -2372, 220 );
+				}
+				else if ( zone.dog_locations[ x ].origin == ( -10476.5, -3987, 220 ) )
+				{
+					zone.dog_locations[ x ].origin = ( -11518, -1088, 220 );
+				}
+				else if ( zone.dog_locations[ x ].origin == ( 8627.5, 1092.5, -145.1 ) )
+				{
+					zone.dog_locations[ x ].origin = ( 10465, -710, -203.2 );
+				}
+				else if ( zone.dog_locations[ x ].origin == ( -6180, -5698, -30.7 ) )
+				{
+					zone.dog_locations[ x ].is_enabled = 0;
+				}
+				else if ( zone.dog_locations[ x ].origin == ( -4989, -5696, -68.9 ) )
+				{
+					zone.dog_locations[ x ].is_enabled = 0;
+				}
+				else if ( zone.dog_locations[ x ].origin == ( -5295, -5557, -61.5 ) )
+				{
+					zone.dog_locations[ x ].is_enabled = 0;
+				}
+				else if ( zone.dog_locations[ x ].origin == ( -5752, -6230, -49.4 ) )
+				{
+					zone.dog_locations[ x ].is_enabled = 0;
+				}
+				else if ( zone.dog_locations[ x ].origin == ( -5888, -6110, -68.3 ) )
+				{
+					zone.dog_locations[ x ].is_enabled = 0;
+				}
+				else if ( zone.dog_locations[ x ].origin == ( -6366, -6381, -36.7 ) )
+				{						
+					zone.dog_locations[ x ].is_enabled = 0;
+				}
+				else if ( zone.dog_locations[ x ].origin == ( -4165, -6098, -64 ) )
+				{
+					zone.dog_locations[ x ].is_enabled = 0;
+				}
+				else if ( zone.dog_locations[ x ].origin == ( -3919, -6425, -32.3 ) )
+				{
+					zone.dog_locations[ x ].is_enabled = 0;
+				}
+				else if ( zone.dog_locations[ x ].origin == (-4274, -5965, -70.9) )
+				{
+					zone.dog_locations[ x ].is_enabled = 0;
+				}
+				else if ( zone.dog_locations[ x ].origin == ( 10434, 8453, -568 ) )
+				{
+					zone.dog_locations[ x ].is_enabled = 0;
+				}
+				if ( zone.dog_locations[ x ].is_enabled )
+				{
+					level.enemy_dog_locations[ level.enemy_dog_locations.size ] = zone.dog_locations[ x ];
+				}
+			}
+		}
+	}
+}
+turn_power_on_and_open_doors() //checked changed at own discretion
+{
+	level.local_doors_stay_open = 1;
+	level.power_local_doors_globally = 1;
+	flag_set( "power_on" );
+	level setclientfield( "zombie_power_on", 1 );
+	zombie_doors = getentarray( "zombie_door", "targetname" );
+	foreach ( door in zombie_doors )
+	{
+		if ( isDefined( door.script_noteworthy ) && door.script_noteworthy == "electric_door" )
+		{
+			door notify( "power_on" );
+		}
+		if ( isDefined( door.script_noteworthy ) && door.script_noteworthy == "local_electric_door" )
+		{
+			if ( getDvar( "ui_zm_mapstartlocation" ) != "power" )
+			{
+				door notify( "local_power_on" );
+			}
+		}
+	}
+}
+
+round_spawning() //checked changed to match cerberus output
+{
+	level endon( "intermission" );
+	level endon( "end_of_round" );
+	level endon( "restart_round" );
+	if ( level.intermission )
+	{
+		return;
+	}
+	if ( level.zombie_spawn_locations.size < 1 )
+	{
+		return;
+	}
+	ai_calculate_health( level.round_number );
+	count = 0;
+	players = get_players();
+	for ( i = 0; i < players.size; i++ )
+	{
+		players[ i ].zombification_time = 0;
+	}
+	max = level.zombie_vars[ "zombie_max_ai" ];
+	multiplier = level.round_number / 5;
+	if ( multiplier < 1 )
+	{
+		multiplier = 1;
+	}
+	if ( level.round_number >= 10 )
+	{
+		multiplier *= level.round_number * 0.15;
+	}
+	player_num = get_players().size;
+	if ( player_num == 1 )
+	{
+		max += int( 0.5 * level.zombie_vars[ "zombie_ai_per_player" ] * multiplier );
+	}
+	else
+	{
+		max += int( ( player_num - 1 ) * level.zombie_vars[ "zombie_ai_per_player" ] * multiplier );
+	}
+	if ( !isDefined( level.max_zombie_func ) )
+	{
+		level.max_zombie_func = ::default_max_zombie_func;
+	}
+	if ( isDefined( level.kill_counter_hud ) && level.zombie_total > 0 )
+	{
+		level.zombie_total = [[ level.max_zombie_func ]]( max );
+		level notify( "zombie_total_set" );
+	}
+	if ( isDefined( level.zombie_total_set_func ) )
+	{
+		level thread [[ level.zombie_total_set_func ]]();
+	}
+	if ( level.round_number < 10 || level.speed_change_max > 0 )
+	{
+		level thread zombie_speed_up();
+	}
+	level.zombie_total = [[ level.max_zombie_func ]]( max );
+	level notify( "zombie_total_set" );
+	mixed_spawns = 0;
+	old_spawn = undefined;
+	while ( 1 )
+	{
+		while ( get_current_zombie_count() >= level.zombie_ai_limit || level.zombie_total <= 0 )
+		{
+			wait 0.1;
+		}
+		while ( get_current_actor_count() >= level.zombie_actor_limit )
+		{
+			clear_all_corpses();
+			wait 0.1;
+		}
+		flag_wait( "spawn_zombies" );
+		while ( level.zombie_spawn_locations.size <= 0 )
+		{
+			wait 0.1;
+		}
+		run_custom_ai_spawn_checks();
+		spawn_point = level.zombie_spawn_locations[ randomint( level.zombie_spawn_locations.size ) ];
+		if ( !isDefined( old_spawn ) )
+		{
+			old_spawn = spawn_point;
+		}
+		else if ( spawn_point == old_spawn )
+		{
+			spawn_point = level.zombie_spawn_locations[ randomint( level.zombie_spawn_locations.size ) ];
+		}
+		old_spawn = spawn_point;
+		if ( isDefined( level.mixed_rounds_enabled ) && level.mixed_rounds_enabled == 1 )
+		{
+			keys = getarraykeys( level.zones );
+			for ( i = 0; i < keys.size; i++ )
+			{
+				if ( level.zones[ keys[ i ] ].is_occupied )
+				{
+					if ( level.zones[ keys[ i ] ].dog_locations.size > 0 )
+					{
+						maps/mp/zombies/_zm_ai_dogs::special_dog_spawn( undefined, 1 );
+						level.zombie_total--;
+
+						wait_network_frame();
+					}
+				}
+			}
+		}
+		wait level.zombie_vars[ "zombie_spawn_delay" ];
+		wait_network_frame();
+	}
 }
