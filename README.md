@@ -25,3 +25,5 @@ g_gametype "zstandard"
 ui_zm_gamemodegroup "zsurvival"
 map "zm_transit"
 ```
+
+Remove all other locations from ui_zm_mapstartlocation to load that map.
