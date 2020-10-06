@@ -111,6 +111,11 @@ main() //checked matches cerberus output
 
 game_objects_allowed( mode, location ) //checked partially changed to match cerberus output changed at own discretion
 {
+	if ( location == "transit" )
+	{
+		location = "station";
+	}
+	allowed = [];
 	allowed[ 0 ] = mode;
 	entities = getentarray();
 	i = 0;
@@ -120,7 +125,7 @@ game_objects_allowed( mode, location ) //checked partially changed to match cerb
 		{
 			isallowed = maps/mp/gametypes_zm/_gameobjects::entity_is_allowed( entities[ i ], allowed );
 			isvalidlocation = maps/mp/gametypes_zm/_gameobjects::location_is_allowed( entities[ i ], location );
-			if ( !isallowed || !isvalidlocation && is_classic() )
+			if ( !isallowed || !isvalidlocation && !is_classic() )
 			{
 				if ( isDefined( entities[ i ].spawnflags ) && entities[ i ].spawnflags == 1 )
 				{
@@ -468,7 +473,7 @@ rungametypemain( gamemode, mode_main_func, use_round_logic ) //checked matches c
 	{
 		return;
 	}
-	level thread game_objects_allowed( get_gamemode_var( "mode" ), get_gamemode_var( "location" ) );
+	level thread game_objects_allowed( getDvar( "g_gametype" ), getDvar( "ui_zm_mapstartlocation" ) );
 	if ( isDefined( level.gamemode_map_main ) )
 	{
 		if ( isDefined( level.gamemode_map_main[ gamemode ] ) )
@@ -1991,41 +1996,39 @@ blank()
 set_location_ents()
 {
 	ents = getEntArray();
-	door_ents = getentarray( "zombie_door", "targetname" );
+	door_ents = getEntArray( "zombie_door", "targetname" );
 	switch ( getdvar( "ui_zm_mapstartlocation" ) )
 	{  
 		case "power":
 			foreach ( door in door_ents )
 			{
-				if ( isDefined( door_ents.targetname ) && door_ents.targetname == "zombie_door" )
+				if ( door.script_noteworthy == "electric_door" )
 				{
-					if ( door_ents.script_noteworthy == "electric_door" )
-					{
-						door_ents.script_noteworthy = "electric_buyable_door";
-						door_ents.marked_for_deletion = 0;
-					}
-					else if ( door_ents.target == "pow_door_rr" )
-					{
-						door_ents.marked_for_deletion = 0;
-					}
-					else if ( isDefined( door_ents ) )
-					{
-						door_ents.marked_for_deletion = 1;
-					}
+					door.script_noteworthy = "electric_buyable_door";
+					door.marked_for_deletion = 0;
 				}
 			}
 			break;
 		case "diner":
-			foreach ( door in door_ents )
+			diner_hatch = getent( "diner_hatch", "targetname" );
+			diner_hatch.script_gameobjectname = "zclassic zstandard zgrief";
+			diner_hatch_mantle = getent( "diner_hatch_mantle", "targetname" );
+			diner_hatch_mantle.script_gameobjectname = "zclassic zstandard zgrief";
+			gameObjects = getEntArray( "script_model", "classname" );
+			foreach ( object in gameObjects )
 			{
-				
-			}
+				if ( object.script_gameobjectname == "zcleansed zturned" )
+				{
+					object.script_gameobjectname = "zstandard zgrief zcleansed zturned";
+				}
+			} 
 			break;
 		case "tunnel":
 			break;
 		case "cornfield":
 			break;
 	}
+	/*
 	ents = getEntArray();
 	foreach ( ent in ents )
 	{
@@ -2034,6 +2037,7 @@ set_location_ents()
 			ent delete();
 		}
 	}
+	*/
 }
 
 location_common_ent_deletion()
