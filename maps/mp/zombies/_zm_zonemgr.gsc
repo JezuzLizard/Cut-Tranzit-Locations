@@ -310,88 +310,6 @@ zone_init( zone_name ) //checked changed to match cerberus output
 	}
 }
 
-//unused code
-/*
-reinit_zone_spawners() //checked changed to match cerberus output
-{
-	zkeys = getarraykeys( level.zones );
-	for( i = 0; i < level.zones.size; i++ )
-	{
-		zone = level.zones[ zkeys[ i ] ];
-		if ( isdefined( zone.volumes[ 0 ].target ) )
-		{
-			spots = getstructarray( zone.volumes[ 0 ].target, "targetname" );
-			zone.spawn_locations = [];
-			zone.dog_locations = [];
-			zone.screecher_locations = [];
-			zone.avogadro_locations = [];
-			zone.quad_locations = [];
-			zone.leaper_locations = [];
-			zone.brutus_locations = [];
-			zone.mechz_locations = [];
-			zone.astro_locations = [];
-			zone.napalm_locations = [];
-			for ( j = 0; j < spots.size; j++ )
-			{
-				spots[ j ].zone_name = zkeys[ j ];
-				if ( isdefined( spots[ j ].is_blocked ) && !spots[ j ].is_blocked )
-				{
-					spots[ j ].is_enabled = 1;
-				}
-				else
-				{
-					spots[ j ].is_enabled = 0;
-				}
-				tokens = strtok( spots[ j ].script_noteworthy, " " );
-				foreach ( token in tokens )
-				{
-					if ( token == "dog_location" )
-					{
-						zone.dog_locations[ zone.dog_locations.size ] = spots[ j ];
-					}
-					else if ( token == "screecher_location" )
-					{
-						zone.screecher_locations[ zone.screecher_locations.size ] = spots[ j ];
-					}
-					else if ( token == "avogadro_location" )
-					{
-						zone.avogadro_locations[ zone.avogadro_locations.size ] = spots[ j ];
-					}
-					else if ( token == "quad_location" )
-					{
-						zone.quad_locations[ zone.quad_locations.size ] = spots[ j ];
-					}
-					else if ( token == "leaper_location" )
-					{
-						zone.leaper_locations[ zone.leaper_locations.size ] = spots[ j ];
-					}
-					else if ( token == "brutus_location" )
-					{
-						zone.brutus_locations[ zone.brutus_locations.size ] = spots[ j ];
-					}
-					else if ( token == "mechz_location" )
-					{
-						zone.mechz_locations[ zone.mechz_locations.size ] = spots[ j ];
-					}
-					else if ( token == "astro_location" )
-					{
-						zone.astro_locations[ zone.astro_locations.size ] = spots[ j ];
-					}
-					else if ( token == "napalm_location" )
-					{
-						zone.napalm_locations[ zone.napalm_locations.size ] = spots[ j ];
-					}
-					else
-					{
-						zone.spawn_locations[ zone.spawn_locations.size ] = spots[ j ];
-					}
-				}
-			}
-		}
-	}
-}
-*/
-
 enable_zone( zone_name ) //checked changed to match cerberus output
 {
 	if ( level.zones[ zone_name ].is_enabled )
@@ -616,7 +534,21 @@ connect_zones( zone_name_a, zone_name_b, one_way ) //checked matches cerberus ou
 
 manage_zones( initial_zone ) //checked changed to match cerberus output
 {
-
+	if ( !is_classic() && getDvar( "mapname" ) == "zm_transit" )
+	{
+		initial_zone = [];
+		initial_zone[ 0 ] = "zone_pri";
+		initial_zone[ 1 ] = "zone_station_ext";
+		initial_zone[ 2 ] = "zone_tow";
+		initial_zone[ 3 ] = "zone_far_ext";
+		initial_zone[ 4 ] = "zone_brn";
+		//Initialize cut location zones
+		////////////////////////////////////
+		initial_zone[ 5 ] = "zone_pow";
+		initial_zone[ 6 ] = "zone_pow_warehouse";
+		initial_zone[ 7 ] = "zone_amb_tunnel";
+		////////////////////////////////////
+	}
 	deactivate_initial_barrier_goals();
 	zone_choke = 0;
 	spawn_points = maps/mp/gametypes_zm/_zm_gametype::get_player_spawns_for_gametype();
@@ -746,106 +678,6 @@ debug_show_spawn_locations() //checked dev call deleted
 {
 }
 
-//unused code
-/*
-old_manage_zones( initial_zone ) //checked changed to match cerberus output
-{
-
-	deactivate_initial_barrier_goals();
-	spawn_points = maps/mp/gametypes_zm/_zm_gametype::get_player_spawns_for_gametype();
-	for ( i = 0; i < spawn_points.size; i++ )
-	{
-		spawn_points[i].locked = 1;
-	}
-	if ( isDefined( level.zone_manager_init_func ) )
-	{
-		[[ level.zone_manager_init_func ]]();
-	}
-	if ( isarray( initial_zone ) )
-	{
-		for ( i = 0; i < initial_zone.size; i++ )
-		{
-			zone_init(initial_zone[ i ]);
-			enable_zone(initial_zone[ i ]);
-		}
-	}
-	else
-	{
-		zone_init( initial_zone );
-		enable_zone( initial_zone );
-	}
-	setup_zone_flag_waits();
-	zkeys = getarraykeys( level.zones );
-	level.zone_keys = zkeys;
-	flag_set( "zones_initialized" );
-	flag_wait( "begin_spawning" );
-	while ( getDvarInt( "noclip" ) == 0 || getDvarInt( "notarget" ) != 0 )
-	{
-		for(z = 0; z < zkeys.size; z++)
-		{
-			level.zones[ zkeys[ z ] ].is_active = 0;
-			level.zones[ zkeys[ z ] ].is_occupied = 0;
-		}
-		a_zone_is_active = 0;
-		a_zone_is_spawning_allowed = 0;
-		for ( z = 0; z < zkeys.size; z++ )
-		{
-			zone = level.zones[ zkeys[ z ] ];
-			if ( !zone.is_enabled )
-			{
-				continue;
-			}
-			if ( isdefined( level.zone_occupied_func ) )
-			{
-				zone.is_occupied = [[ level.zone_occupied_func ]]( zkeys[ z ] );
-			}
-			else
-			{
-				zone.is_occupied = player_in_zone( zkeys[ z ] );
-			}
-			if ( zone.is_occupied )
-			{
-				zone.is_active = 1;
-				a_zone_is_active = 1;
-				if ( zone.is_spawning_allowed )
-				{
-					a_zone_is_spawning_allowed = 1;
-				}
-				azkeys = getarraykeys(zone.adjacent_zones);
-				for ( az = 0; az < zone.adjacent_zones.size; az++ )
-				{
-					if ( zone.adjacent_zones[ azkeys[ az ] ].is_connected && level.zones[ azkeys[ az ] ].is_enabled )
-					{
-						level.zones[ azkeys[ az ] ].is_active = 1;
-						if ( level.zones[ azkeys[ az ] ].is_spawning_allowed )
-						{
-							a_zone_is_spawning_allowed = 1;
-						}
-					}
-				}
-			}
-		}
-		if ( !a_zone_is_active || !a_zone_is_spawning_allowed )
-		{
-			if ( isarray( initial_zone ) )
-			{
-				level.zones[ initial_zone[ 0 ] ].is_active = 1;
-				level.zones[ initial_zone[ 0 ] ].is_occupied = 1;
-				level.zones[ initial_zone[ 0 ] ].is_spawning_allowed = 1;
-			}
-			else
-			{
-				level.zones[ initial_zone ].is_active = 1;
-				level.zones[ initial_zone ].is_occupied = 1;
-				level.zones[ initial_zone ].is_spawning_allowed = 1;
-			}
-		}
-		[[ level.create_spawner_list_func ]]( zkeys );
-		level.active_zone_names = maps/mp/zombies/_zm_zonemgr::get_active_zone_names();
-		wait 1;
-	}
-}
-*/
 create_spawner_list( zkeys ) //checked changed to match cerberus output
 {
 	level.zombie_spawn_locations = [];
@@ -966,129 +798,6 @@ get_active_zone_names() //checked changed to match cerberus output
 	}
 	return ret_list;
 }
-
-//commented out 
-/*
-_init_debug_zones() //checked changed to match cerberus output
-{
-	current_y = 30;
-	current_x = 20;
-	xloc = [];
-	xloc[ 0 ] = 50;
-	xloc[ 1 ] = 60;
-	xloc[ 2 ] = 100;
-	xloc[ 3 ] = 130;
-	xloc[ 4 ] = 170;
-	zkeys = getarraykeys( level.zones );
-	for(i = 0; i < zkeys.size; i++)
-	{
-		zonename = zkeys[i];
-		zone = level.zones[zonename];
-		zone.debug_hud = [];
-		for(j = 0; j < 5; j++)
-		{
-			zone.debug_hud[j] = newdebughudelem();
-			if(!j)
-			{
-				zone.debug_hud[j].alignx = "right";
-			}
-			else
-			{
-				zone.debug_hud[j].alignx = "left";
-			}
-			zone.debug_hud[j].x = xloc[j];
-			zone.debug_hud[j].y = current_y;
-		}
-		current_y = current_y + 10;
-		zone.debug_hud[0] settext(zonename);
-	}
-}
-
-_destroy_debug_zones() //checked changed to match cerberus output
-{
-	zkeys = getarraykeys(level.zones);
-	for(i = 0; i < zkeys.size; i++)
-	{
-		zonename = zkeys[i];
-		zone = level.zones[zonename];
-		for(j = 0; j < 5; j++)
-		{
-			zone.debug_hud[j] destroy();
-			zone.debug_hud[j] = undefined;
-		}
-	}
-}
-
-_debug_zones() //checked changed to match cerberus output
-{
-	enabled = 0;
-	if ( getDvar( "zombiemode_debug_zones" ) == "" )
-	{
-		setdvar( "zombiemode_debug_zones", "0" );
-	}
-	while(1)
-	{
-		wasenabled = enabled;
-		enabled = GetDvarInt(hash_10e35bc4);
-		if(enabled && !wasenabled)
-		{
-			_init_debug_zones();
-		}
-		else if(!enabled && wasenabled)
-		{
-			_destroy_debug_zones();
-		}
-		if(enabled)
-		{
-			zkeys = getarraykeys(level.zones);
-			for(i = 0; i < zkeys.size; i++)
-			{
-				zonename = zkeys[i];
-				zone = level.zones[zonename];
-				text = zonename;
-				zone.debug_hud[0] settext(text);
-				if(zone.is_enabled)
-				{
-					text = text + " Enabled";
-					zone.debug_hud[1] settext("Enabled");
-				}
-				else
-				{
-					zone.debug_hud[1] settext("");
-				}
-				if(zone.is_active)
-				{
-					text = text + " Active";
-					zone.debug_hud[2] settext("Active");
-				}
-				else
-				{
-					zone.debug_hud[2] settext("");
-				}
-				if(zone.is_occupied)
-				{
-					text = text + " Occupied";
-					zone.debug_hud[3] settext("Occupied");
-				}
-				else
-				{
-					zone.debug_hud[3] settext("");
-				}
-				if(zone.is_spawning_allowed)
-				{
-					text = text + " SpawningAllowed";
-					zone.debug_hud[4] settext("SpawningAllowed");
-				}
-				else
-				{
-					zone.debug_hud[4] settext("");
-				}
-			}
-		}
-		wait(0.1);
-	}
-}
-*/
 
 is_player_in_zone( zone_name ) //checked changed to match cerberus output
 {
