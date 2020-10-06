@@ -14,24 +14,55 @@
 
 treasure_chest_init()
 {
+	mystery_box_zbarriers = getEntArray( "zbarrier_zmcore_MagicBox", "classname" );
 	normalChests = getstructarray( "treasure_chest_use", "targetname" );
 	level.chests = [];
 	switch ( getDvar( "ui_zm_mapstartlocation" ) )
 	{
 		case "tunnel":
-			start_chest = spawnstruct();
+			start_chest_zbarrier = getEnt( "start_chest_zbarrier", "script_noteworthy" );
+			start_chest_zbarrier.origin = ( -11090, -349, 193 );
+			start_chest_zbarrier.angles = ( 0, -100, 0 );
+			start_chest = spawnStruct();
 			start_chest.origin = ( -11090, -349, 193 );
 			start_chest.angles = ( 0, -100, 0 );
 			start_chest.script_noteworthy = "start_chest";
 			start_chest.zombie_cost = 950;
-			start_chest2 = spawnstruct();
+			collision = spawn( "script_model", start_chest_zbarrier.origin );
+			collision.angles = start_chest_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			collision = spawn( "script_model", start_chest_zbarrier.origin - ( 4, 30, 0 ) );
+			collision.angles = start_chest_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			collision = spawn( "script_model", start_chest_zbarrier.origin + ( 4, 30, 0 ) );
+			collision.angles = start_chest_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			start_chest2_zbarrier = getEnt( "farm_chest_zbarrier", "script_noteworthy" );
+			start_chest2_zbarrier.origin = ( -11772, -2501, 232 );
+			start_chest2_zbarrier.angles = ( 0, -90, 0 );
+			start_chest2 = spawnStruct();
 			start_chest2.origin = ( -11772, -2501, 232 );
-			start_chest2.angles = ( 0, 90, 0 );
+			start_chest2.angles = ( 0, -90, 0 );
 			start_chest2.script_noteworthy = "farm_chest";
 			start_chest2.zombie_cost = 950;
+			collision = spawn( "script_model", start_chest2_zbarrier.origin );
+			collision.angles = start_chest2_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			collision = spawn( "script_model", start_chest2_zbarrier.origin - ( 36, 0, 0 ) );
+			collision.angles = start_chest2_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			collision = spawn( "script_model", start_chest2_zbarrier.origin + ( 36, 0, 0 ) );
+			collision.angles = start_chest2_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
 			level.chests[ 0 ] = start_chest;
 			level.chests[ 1 ] = start_chest2;
-			randy = RandomIntRange( 0, 3 );
+			randy = randomIntRange( 0, 3 );
 			if ( randy == 1 )
             {
 				treasure_chest_init( "start_chest" );
@@ -42,25 +73,70 @@ treasure_chest_init()
             }
 			break;
 		case "cornfield":
-			start_chest = spawnstruct();
+			start_chest_zbarrier = getEnt( "start_chest_zbarrier", "script_noteworthy" );
+			start_chest_zbarrier.origin = ( 13566, -541, -188 );
+			start_chest_zbarrier.angles = ( 0, -90, 0 );
+			start_chest = spawnStruct();
 			start_chest.origin = ( 13566, -541, -188 );
 			start_chest.angles = ( 0, -90, 0 );
 			start_chest.script_noteworthy = "start_chest";
 			start_chest.zombie_cost = 950;
-			start_chest2 = spawnstruct();
+			collision = spawn( "script_model", start_chest_zbarrier.origin );
+			collision.angles = start_chest_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			collision = spawn( "script_model", start_chest_zbarrier.origin - ( 0, 32, 0 ) );
+			collision.angles = start_chest_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			collision = spawn( "script_model", start_chest_zbarrier.origin + ( 0, 32, 0 ) );
+			collision.angles = start_chest_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			start_chest2_zbarrier = getEnt( "depot_chest_zbarrier", "script_noteworthy" );
+			start_chest2_zbarrier.origin = ( 7458, -464, -196 );
+			start_chest2_zbarrier.angles = ( 0, -90, 0 );
+			start_chest2 = spawnStruct();
 			start_chest2.origin = ( 7458, -464, -196 );
 			start_chest2.angles = ( 0, -90, 0 );
 			start_chest2.script_noteworthy = "depot_chest";
 			start_chest2.zombie_cost = 950;
-			start_chest3 = spawnstruct();
+			collision = spawn( "script_model", start_chest2_zbarrier.origin );
+			collision.angles = start_chest2_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			collision = spawn( "script_model", start_chest2_zbarrier.origin - ( 0, 32, 0 ) );
+			collision.angles = start_chest2_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			collision = spawn( "script_model", start_chest2_zbarrier.origin + ( 0, 32, 0 ) );
+			collision.angles = start_chest2_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			start_chest3_zbarrier = getEnt( "farm_chest_zbarrier", "script_noteworthy" );
+			start_chest3_zbarrier.origin = ( 10158, 49, -220 );
+			start_chest3_zbarrier.angles = ( 0, -185, 0 );
+			start_chest3 = spawnStruct();
 			start_chest3.origin = ( 10158, 49, -220 );
 			start_chest3.angles = ( 0, -185, 0 );
 			start_chest3.script_noteworthy = "farm_chest";
 			start_chest3.zombie_cost = 950;
+			collision = spawn( "script_model", start_chest3_zbarrier.origin );
+			collision.angles = start_chest3_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			collision = spawn( "script_model", start_chest3_zbarrier.origin - ( 32, 0, 0 ) );
+			collision.angles = start_chest3_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			collision = spawn( "script_model", start_chest3_zbarrier.origin + ( 32, 0, 0 ) );
+			collision.angles = start_chest3_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
 			level.chests[ 0 ] = start_chest;
 			level.chests[ 1 ] = start_chest2;
 			level.chests[ 2 ] = start_chest3;
-			randy = RandomIntRange( 0, 3 );
+			randy = randomIntRange( 0, 3 );
 			if ( randy == 1 )
             {
 				treasure_chest_init( "start_chest" );
@@ -75,40 +151,54 @@ treasure_chest_init()
             }
 			break;
 		case "power":
-			start_chest = spawnstruct();
+			start_chest_zbarrier = getEnt( "depot_chest_zbarrier", "script_noteworthy" );
+			start_chest_zbarrier.origin = ( 10806, 8518, -407 );
+			start_chest_zbarrier.angles = ( 0, 180, 0 );
+			start_chest = spawnStruct();
 			start_chest.origin = ( 10806, 8518, -407 );
 			start_chest.angles = ( 0, 180, 0 );
 			start_chest.script_noteworthy = "depot_chest";
 			start_chest.zombie_cost = 950;
+			collision = spawn( "script_model", start_chest_zbarrier.origin );
+			collision.angles = start_chest_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			collision = spawn( "script_model", start_chest_zbarrier.origin - ( 32, 0, 0 ) );
+			collision.angles = start_chest_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			collision = spawn( "script_model", start_chest_zbarrier.origin + ( 32, 0, 0 ) );
+			collision.angles = start_chest_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
 			level.chests[ 0 ] = normalChests[ 2 ];
 			level.chests[ 1 ] = start_chest;
-			randy = RandomIntRange( 0, 2 );
-			if ( randy == 1 )
-            {
-				treasure_chest_init( "pow_chest" );
-            }
-			else
-            {
-				treasure_chest_init( "depot_chest" );
-            }
+			treasure_chest_init( "pow_chest" );
 			break;
 		case "diner":
-			start_chest = spawnstruct();
+			start_chest_zbarrier = getEnt( "depot_chest_zbarrier", "script_noteworthy" );
+			start_chest_zbarrier.origin = ( -5708, -7968, 232 );
+			start_chest_zbarrier.angles = ( 0, 1, 0 );
+			start_chest = spawnStruct();
 			start_chest.origin = ( -5708, -7968, 232 );
 			start_chest.angles = ( 0, 1, 0 );
 			start_chest.script_noteworthy = "depot_chest";
 			start_chest.zombie_cost = 950;
+			collision = spawn( "script_model", start_chest_zbarrier.origin );
+			collision.angles = start_chest_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			collision = spawn( "script_model", start_chest_zbarrier.origin - ( 32, 0, 0 ) );
+			collision.angles = start_chest_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
+			collision = spawn( "script_model", start_chest_zbarrier.origin + ( 32, 0, 0 ) );
+			collision.angles = start_chest_zbarrier.angles;
+			collision setmodel( "collision_clip_32x32x128" );
+			collision disconnectpaths();
 			level.chests[ 0 ] = normalChests[ 3 ];
 			level.chests[ 1 ] = start_chest;
-			randy = RandomIntRange( 0, 3 );
-			if ( randy == 1 )
-            {
-				treasure_chest_init( "start_chest" );
-            }
-			else
-            {
-				treasure_chest_init( "depot_chest" );
-            }
+			treasure_chest_init( "start_chest" );
 			break;
 	}
 }
@@ -125,7 +215,7 @@ main()
 			_weapon_spawner( ( 0, 0, 0 ), ( -5085, -7807, -5 ), "rottweil72_zm_fx", "rottweil72_zm", "t6_wpn_shotty_olympia_world", "olympia", "weapon_upgrade" );
 			_weapon_spawner( ( 0, 180, 0 ), ( -3578, -7181, 0 ), "m16_zm_fx", "m16_zm", "t6_wpn_ar_m16a2_world", "m16", "weapon_upgrade" );
 			_weapon_spawner( ( 0, 1, 0 ), ( -5489, -7982.7, 62 ), "mp5k_zm_fx", "mp5k_zm", "t6_wpn_smg_mp5_world", "mp5", "weapon_upgrade" );
-			_weapon_spawner( ( 0, 270, 0 ), ( -6399.2, -7938.5, 207.25 ), "tazer_knuckles_zm_fx", "tazer_knuckles_zm", "t6_wpn_taser_knuckles_world", "tazer_knuckles", "tazer_upgrade" );
+			//_weapon_spawner( ( 0, 270, 0 ), ( -6399.2, -7938.5, 207.25 ), "tazer_knuckles_zm_fx", "tazer_knuckles_zm", "t6_wpn_taser_knuckles_world", "tazer_knuckles", "tazer_upgrade" );
 			break;
 		case "tunnel":
 			_weapon_spawner( ( 0, -86, 0 ), ( -11166, -2844, 247 ), "m14_zm_fx", "m14_zm", "t6_wpn_ar_m14_world", "m14", "weapon_upgrade" );
@@ -150,8 +240,6 @@ main()
 			level thread increase_cornfield_zombie_speed();
 			break;
 	}
-	//logline1 = "_globalentities.gsc main() initial setup done" + "\n";
-	//logprint( logline1 );
 	init_barriers_for_cut_locations();
 	treasure_chest_init();
 	level.enemy_location_override_func = ::enemy_location_override;
@@ -211,25 +299,18 @@ diner_hatch_access() //modified function
 _weapon_spawner( weapon_angles, weapon_coordinates, chalk_fx, weapon_name, weapon_model, target, targetname )
 {
 	tempmodel = spawn( "script_model", ( 0, 0, 0 ) );
-	weapon_spawn = spawnstruct();
-	weapon_spawn.angles = weapon_angles;
-	weapon_spawn.origin = weapon_coordinates;
-	weapon_spawn.targetname = targetname;
-	weapon_spawn.zombie_weapon_upgrade = weapon_name;
-	weapon_spawn.model = weapon_model;
-	weapon_spawn.target = target;
-	precachemodel( weapon_spawn.model );
+	precachemodel( weapon_model );
 	unitrigger_stub = spawnstruct();
-	unitrigger_stub.origin = weapon_spawn.origin;
-	unitrigger_stub.angles = weapon_spawn.angles;
-	tempmodel.origin = weapon_spawn.origin;
-	tempmodel.angles = weapon_spawn.angles;
+	unitrigger_stub.origin = weapon_coordinates;
+	unitrigger_stub.angles = weapon_angles;
+	tempmodel.origin = weapon_coordinates;
+	tempmodel.angles = weapon_angles;
 	mins = undefined;
 	maxs = undefined;
 	absmins = undefined;
 	absmaxs = undefined;
-	tempmodel setmodel( weapon_spawn.model );
-	tempmodel useweaponhidetags( weapon_spawn.zombie_weapon_upgrade );
+	tempmodel setmodel( weapon_model );
+	tempmodel useweaponhidetags( weapon_name );
 	mins = tempmodel getmins();
 	maxs = tempmodel getmaxs();
 	absmins = tempmodel getabsmins();
@@ -239,46 +320,43 @@ _weapon_spawner( weapon_angles, weapon_coordinates, chalk_fx, weapon_name, weapo
 	unitrigger_stub.script_width = bounds[ 1 ];
 	unitrigger_stub.script_height = bounds[ 2 ];
 	unitrigger_stub.origin -= anglesToRight( unitrigger_stub.angles ) * ( unitrigger_stub.script_length * 0.4 );
-	unitrigger_stub.target = weapon_spawn.target;
-	unitrigger_stub.targetname = weapon_spawn.targetname;
+	unitrigger_stub.target = target;
+	unitrigger_stub.targetname = targetname;
 	unitrigger_stub.cursor_hint = "HINT_NOICON";
-	if ( weapon_spawn.targetname == "weapon_upgrade" )
+	if ( unitrigger_stub.targetname == "weapon_upgrade" )
 	{
-		unitrigger_stub.cost = get_weapon_cost( weapon_spawn.zombie_weapon_upgrade );
+		unitrigger_stub.cost = get_weapon_cost( weapon_name );
 		if ( !is_true( level.monolingustic_prompt_format ) )
 		{
-			unitrigger_stub.hint_string = get_weapon_hint( weapon_spawn.zombie_weapon_upgrade );
+			unitrigger_stub.hint_string = get_weapon_hint( weapon_name );
 			unitrigger_stub.hint_parm1 = unitrigger_stub.cost;
 		}
 		else
 		{
-			unitrigger_stub.hint_parm1 = get_weapon_display_name( weapon_spawn.zombie_weapon_upgrade );
+			unitrigger_stub.hint_parm1 = get_weapon_display_name( weapon_name );
 			if ( !isDefined( unitrigger_stub.hint_parm1 ) || unitrigger_stub.hint_parm1 == "" || unitrigger_stub.hint_parm1 == "none" )
 			{
-				unitrigger_stub.hint_parm1 = "missing weapon name " + weapon_spawn.zombie_weapon_upgrade;
+				unitrigger_stub.hint_parm1 = "missing weapon name " + weapon_name;
 			}
 			unitrigger_stub.hint_parm2 = unitrigger_stub.cost;
 			unitrigger_stub.hint_string = &"ZOMBIE_WEAPONCOSTONLY";
 		}
 	}
-	unitrigger_stub.cost = get_weapon_cost( weapon_spawn.zombie_weapon_upgrade );
-	unitrigger_stub.hint_string = get_weapon_hint( weapon_spawn.zombie_weapon_upgrade );
-	unitrigger_stub.hint_parm1 = unitrigger_stub.cost;
-	unitrigger_stub.weapon_upgrade = weapon_spawn.zombie_weapon_upgrade;
+	unitrigger_stub.weapon_upgrade = weapon_name;
 	unitrigger_stub.script_unitrigger_type = "unitrigger_box_use";
 	unitrigger_stub.require_look_at = 1;
 	unitrigger_stub.require_look_from = 0;
-	unitrigger_stub.zombie_weapon_upgrade = weapon_spawn.zombie_weapon_upgrade;
+	unitrigger_stub.zombie_weapon_upgrade = weapon_name;
 	maps/mp/zombies/_zm_unitrigger::unitrigger_force_per_player_triggers( unitrigger_stub, 1 );
-	if ( is_melee_weapon( unitrigger_stub.zombie_weapon_upgrade ) )
+	if ( is_melee_weapon( weapon_name ) )
 	{
-		if ( unitrigger_stub.zombie_weapon_upgrade == "tazer_knuckles_zm" && isDefined( level.taser_trig_adjustment ) )
+		if ( weapon_name == "tazer_knuckles_zm" && isDefined( level.taser_trig_adjustment ) )
 		{
 			unitrigger_stub.origin += level.taser_trig_adjustment;
 		}
 		maps/mp/zombies/_zm_unitrigger::register_static_unitrigger( unitrigger_stub, ::melee_weapon_think );
 	}
-	else if ( unitrigger_stub.zombie_weapon_upgrade == "claymore_zm" )
+	else if ( weapon_name == "claymore_zm" )
 	{
 		unitrigger_stub.prompt_and_visibility_func = ::claymore_unitrigger_update_prompt;
 		maps/mp/zombies/_zm_unitrigger::register_static_unitrigger( unitrigger_stub, ::buy_claymores );
@@ -288,18 +366,19 @@ _weapon_spawner( weapon_angles, weapon_coordinates, chalk_fx, weapon_name, weapo
 		unitrigger_stub.prompt_and_visibility_func = ::wall_weapon_update_prompt;
 		maps/mp/zombies/_zm_unitrigger::register_static_unitrigger( unitrigger_stub, ::weapon_spawn_think );
 	}
-	weapon_spawn.trigger_stub = unitrigger_stub;
-	tempmodel.origin += anglesToForward( ( 0, yaw, 0 ) ) * 8;
 	tempmodel delete();
     thread playchalkfx( chalk_fx, weapon_coordinates, weapon_angles );
 }
 
 playchalkfx( effect, origin, angles ) //custom function
 {
-	fxSpawner = spawn( "script_model", origin );
-	fxSpawner setmodel( "tag_origin" );
-	fxSpawner.angles = angles;
-	playfxontag( level._effect[ effect ], fxSpawner, "tag_origin" );
+	while ( 1 )
+	{
+		fx = SpawnFX( level._effect[ effect ], origin, AnglesToForward( angles ), AnglesToUp( angles ) );
+		TriggerFX( fx );
+		level waittill( "connected", player );
+		fx Delete();
+	}
 }
 
 zombie_speed_up_distance_check()
@@ -395,7 +474,7 @@ init_barriers_for_cut_locations() //custom function
 		case "cornfield":
 			_spawn_tranzit_barrier( ( 10190, 135, -159 ), "veh_t6_civ_movingtrk_cab_dead", ( 0, 172, 0 ) );
 			_spawn_tranzit_barrier( ( 10100, 100, -159 ), "collision_player_wall_512x512x10", ( 0, 172, 0 ) );
-			_spawn_tranzit_barrier( ( 10100, -1800, 217 ), "veh_t6_civ_bus_zombie", ( 0, 126, 0 ), 1 );
+			_spawn_tranzit_barrier( ( 10100, -1800, -217 ), "veh_t6_civ_bus_zombie", ( 0, 126, 0 ), 1 );
 			_spawn_tranzit_barrier( ( 10045, -1607, -181 ), "collision_player_wall_512x512x10", ( 0, 126, 0 ) );
 			break;
 	}
@@ -534,6 +613,7 @@ create_spawner_list( zkeys ) //modified function
 				{
 					zone.spawn_locations[ i ].origin = ( -11241.2, -1118.76, 184.125 );
 				}
+				/*
 				else if ( zone.spawn_locations[ i ].origin == ( -10747, -63, 203.8 ) )
 				{
 					zone.spawn_locations[ i ].is_enabled = 0;
@@ -554,7 +634,12 @@ create_spawner_list( zkeys ) //modified function
 				{
 					zone.spawn_locations[ i ].is_enabled = 0;
 				}
-				if(zone.spawn_locations[ i ].is_enabled)
+				*/
+				else if ( zone.spawn_locations[ i ].targetname == "zone_trans_diner_spawners")
+				{
+					zone.spawn_locations[ i ].is_enabled = 0;
+				}
+				if ( zone.spawn_locations[ i ].is_enabled )
 				{
 					level.zombie_spawn_locations[ level.zombie_spawn_locations.size ] = zone.spawn_locations[ i ];
 				}
