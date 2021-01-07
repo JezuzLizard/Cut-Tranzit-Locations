@@ -25,7 +25,9 @@
 
 main() //checked matches cerberus output
 {
-	if ( getdvar( "mapname" ) == "zm_transit" )
+	location = getDvar( "ui_zm_mapstartlocation" );
+	map = getDvar( "mapname" );
+	if ( ( map == "zm_transit" && location == "diner" ) || ( map == "zm_transit" && location == "cornfield" ) || ( map == "zm_transit" && location == "power" ) || ( map == "zm_transit" && location == "tunnel" ) )
 	{
 		set_location_ents();
 	}

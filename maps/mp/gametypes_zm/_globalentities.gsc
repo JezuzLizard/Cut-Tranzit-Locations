@@ -42,10 +42,10 @@ treasure_chest_init()
 			collision disconnectpaths();
 			start_chest2_zbarrier = getEnt( "farm_chest_zbarrier", "script_noteworthy" );
 			start_chest2_zbarrier.origin = ( -11772, -2501, 232 );
-			start_chest2_zbarrier.angles = ( 0, -90, 0 );
+			start_chest2_zbarrier.angles = ( 0, 0, 0 );
 			start_chest2 = spawnStruct();
 			start_chest2.origin = ( -11772, -2501, 232 );
-			start_chest2.angles = ( 0, -90, 0 );
+			start_chest2.angles = ( 0, 0, 0 );
 			start_chest2.script_noteworthy = "farm_chest";
 			start_chest2.zombie_cost = 950;
 			collision = spawn( "script_model", start_chest2_zbarrier.origin );
@@ -206,7 +206,6 @@ treasure_chest_init()
 main()
 {
 	level.create_spawner_list_func = ::create_spawner_list;
-	//level.zone_spawn_locations_override = ::zone_spawn_locations_override;
 	switch ( getDvar( "ui_zm_mapstartlocation" ) )
 	{
 		case "diner":
@@ -226,7 +225,7 @@ main()
 			break;
 		case "power":
 			//_weapon_spawner( ( 0, 90, 0), ( 10559, 8226, -504 ), "m14_zm_fx", "m14_zm", "t6_wpn_ar_m14_world", "m14", "weapon_upgrade" );
-			_weapon_spawner( ( 0, 170, 0 ), ( 11769, 7662, -701 ), "rottweil72_zm_fx", "rottweil72_zm", "t6_wpn_shotty_olympia_world", "olympia", "weapon_upgrade" );
+			//_weapon_spawner( ( 0, 170, 0 ), ( 11769, 7662, -701 ), "rottweil72_zm_fx", "rottweil72_zm", "t6_wpn_shotty_olympia_world", "olympia", "weapon_upgrade" );
 			_weapon_spawner( ( 0, 0, 0 ), ( 10859, 8146, -353 ), "m16_zm_fx", "m16_zm", "t6_wpn_ar_m16a2_world", "m16", "weapon_upgrade" );
 			_weapon_spawner( ( 0, 90, 0 ), ( 11452, 8692, -521 ), "mp5k_zm_fx", "mp5k_zm", "t6_wpn_smg_mp5_world", "mp5", "weapon_upgrade" );
 			//_weapon_spawner( ( 0, 180, 0 ), ( -4280, -7486, -5 ), "bowie_knife_zm_fx", "bowie_knife_zm", "world_knife_bowie", "bowie_knife", "bowie_upgrade" );
@@ -245,8 +244,6 @@ main()
 	level.enemy_location_override_func = ::enemy_location_override;
 	level.player_out_of_playable_area_monitor = 0;
 	flag_wait( "initial_blackscreen_passed" );
-	//level.mixed_rounds_enabled = 1;
-	//level.round_spawn_func = ::round_spawning;
 	turn_power_on_and_open_doors();
 	flag_wait( "start_zombie_round_logic" );
 	wait 1;
@@ -480,30 +477,6 @@ init_barriers_for_cut_locations() //custom function
 	}
 }
 
-zone_spawn_locations_override( spawn_locations, zone )
-{
-	switch ( zone )
-	{
-		case "zone_trans_diner":
-			break;
-		case "zone_roadside_west":
-			break;
-		case "zone_gas":
-			break;
-		case "zone_trans_diner2":
-			break;
-		case "zone_roadside_east":
-			break;
-		case "zone_din":
-			break;
-		case "zone_gar":
-			break;
-		case "zone_diner_roof":
-			break;
-	}
-	return spawn_locations;
-}
-
 create_spawner_list( zkeys ) //modified function
 {
 	level.zombie_spawn_locations = [];
@@ -730,114 +703,5 @@ turn_power_on_and_open_doors() //checked changed at own discretion
 				door notify( "local_power_on" );
 			}
 		}
-	}
-}
-
-round_spawning() //checked changed to match cerberus output
-{
-	level endon( "intermission" );
-	level endon( "end_of_round" );
-	level endon( "restart_round" );
-	if ( level.intermission )
-	{
-		return;
-	}
-	if ( level.zombie_spawn_locations.size < 1 )
-	{
-		return;
-	}
-	ai_calculate_health( level.round_number );
-	count = 0;
-	players = get_players();
-	for ( i = 0; i < players.size; i++ )
-	{
-		players[ i ].zombification_time = 0;
-	}
-	max = level.zombie_vars[ "zombie_max_ai" ];
-	multiplier = level.round_number / 5;
-	if ( multiplier < 1 )
-	{
-		multiplier = 1;
-	}
-	if ( level.round_number >= 10 )
-	{
-		multiplier *= level.round_number * 0.15;
-	}
-	player_num = get_players().size;
-	if ( player_num == 1 )
-	{
-		max += int( 0.5 * level.zombie_vars[ "zombie_ai_per_player" ] * multiplier );
-	}
-	else
-	{
-		max += int( ( player_num - 1 ) * level.zombie_vars[ "zombie_ai_per_player" ] * multiplier );
-	}
-	if ( !isDefined( level.max_zombie_func ) )
-	{
-		level.max_zombie_func = ::default_max_zombie_func;
-	}
-	if ( isDefined( level.kill_counter_hud ) && level.zombie_total > 0 )
-	{
-		level.zombie_total = [[ level.max_zombie_func ]]( max );
-		level notify( "zombie_total_set" );
-	}
-	if ( isDefined( level.zombie_total_set_func ) )
-	{
-		level thread [[ level.zombie_total_set_func ]]();
-	}
-	if ( level.round_number < 10 || level.speed_change_max > 0 )
-	{
-		level thread zombie_speed_up();
-	}
-	level.zombie_total = [[ level.max_zombie_func ]]( max );
-	level notify( "zombie_total_set" );
-	mixed_spawns = 0;
-	old_spawn = undefined;
-	while ( 1 )
-	{
-		while ( get_current_zombie_count() >= level.zombie_ai_limit || level.zombie_total <= 0 )
-		{
-			wait 0.1;
-		}
-		while ( get_current_actor_count() >= level.zombie_actor_limit )
-		{
-			clear_all_corpses();
-			wait 0.1;
-		}
-		flag_wait( "spawn_zombies" );
-		while ( level.zombie_spawn_locations.size <= 0 )
-		{
-			wait 0.1;
-		}
-		run_custom_ai_spawn_checks();
-		spawn_point = level.zombie_spawn_locations[ randomint( level.zombie_spawn_locations.size ) ];
-		if ( !isDefined( old_spawn ) )
-		{
-			old_spawn = spawn_point;
-		}
-		else if ( spawn_point == old_spawn )
-		{
-			spawn_point = level.zombie_spawn_locations[ randomint( level.zombie_spawn_locations.size ) ];
-		}
-		old_spawn = spawn_point;
-		if ( isDefined( level.mixed_rounds_enabled ) && level.mixed_rounds_enabled == 1 )
-		{
-			keys = getarraykeys( level.zones );
-			for ( i = 0; i < keys.size; i++ )
-			{
-				if ( level.zones[ keys[ i ] ].is_occupied )
-				{
-					if ( level.zones[ keys[ i ] ].dog_locations.size > 0 )
-					{
-						maps/mp/zombies/_zm_ai_dogs::special_dog_spawn( undefined, 1 );
-						level.zombie_total--;
-
-						wait_network_frame();
-					}
-				}
-			}
-		}
-		wait level.zombie_vars[ "zombie_spawn_delay" ];
-		wait_network_frame();
 	}
 }
