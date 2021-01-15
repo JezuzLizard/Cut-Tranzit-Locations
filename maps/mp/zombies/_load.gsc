@@ -186,8 +186,16 @@ main( bscriptgened, bcsvgened, bsgenabled ) //checked partially changed to match
 	}
 	//Initialize cut locations
 	/////////////////////////////
-	register_perk_structs();
-	register_spawnpoint_structs();
+	map = getDvar( "mapname" );
+	location = getDvar( "ui_zm_mapstartlocation" ); 
+	if ( map == "zm_transit" )
+	{
+		if ( location == "diner" || location == "cornfield" || location == "power" || location == "tunnel" )
+		{
+			register_perk_structs();
+			register_spawnpoint_structs();
+		}
+	}
 	/////////////////////////////
 }
 
@@ -630,5 +638,3 @@ _get_spawnpoint_script_string_for_location( location, gametype )
 	string = gametype + "_" + location;
 	return string;
 }
-
-
