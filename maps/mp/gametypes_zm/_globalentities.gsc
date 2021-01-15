@@ -229,6 +229,7 @@ main()
 			_weapon_spawner( ( 0, 0, 0 ), ( 10859, 8146, -353 ), "m16_zm_fx", "m16_zm", "t6_wpn_ar_m16a2_world", "m16", "weapon_upgrade" );
 			_weapon_spawner( ( 0, 90, 0 ), ( 11452, 8692, -521 ), "mp5k_zm_fx", "mp5k_zm", "t6_wpn_smg_mp5_world", "mp5", "weapon_upgrade" );
 			//_weapon_spawner( ( 0, 180, 0 ), ( -4280, -7486, -5 ), "bowie_knife_zm_fx", "bowie_knife_zm", "world_knife_bowie", "bowie_knife", "bowie_upgrade" );
+			level thread falling_death_init();
 			break;
 		case "cornfield":
 			//_weapon_spawner( ( 0, -180, 0 ), ( 13603, -1282, -134 ), "claymore_zm_fx", "claymore_zm", "t6_wpn_claymore_world", "claymore", "claymore_purchase" );
@@ -295,6 +296,10 @@ diner_hatch_access() //modified function
 
 _weapon_spawner( weapon_angles, weapon_coordinates, chalk_fx, weapon_name, weapon_model, target, targetname )
 {
+	if ( isDefined( level.czm_gamerule_wall_weapon_restriction_list ) && [[ level.czm_gamerule_wall_weapon_restriction_list ]]( weapon_name ) )
+	{
+		return;
+	}
 	tempmodel = spawn( "script_model", ( 0, 0, 0 ) );
 	precachemodel( weapon_model );
 	unitrigger_stub = spawnstruct();
@@ -704,4 +709,114 @@ turn_power_on_and_open_doors() //checked changed at own discretion
 			}
 		}
 	}
+}
+
+falling_death_init() //checked changed to match beta dump
+{
+	trig = getent( "transit_falling_death", "targetname" );
+	if ( isDefined( trig ) )
+	{
+		while ( true )
+		{
+			trig waittill( "trigger", who );
+			if ( !is_true( who.insta_killed ) )
+			{
+				who thread insta_kill_player();
+			}
+		}
+	}
+}
+
+insta_kill_player() //checked changed to match beta dump
+{
+	self endon( "disconnect" );
+	if ( is_true( self.insta_killed ) )
+	{
+		return;
+	}
+	self maps/mp/zombies/_zm_buildables::player_return_piece_to_original_spawn();
+	if ( is_player_killable( self ) )
+	{
+		self.insta_killed = 1;
+		in_last_stand = 0;
+		if ( self maps/mp/zombies/_zm_laststand::player_is_in_laststand() )
+		{
+			in_last_stand = 1;
+		}
+		if ( getnumconnectedplayers() == 1 )
+		{
+			if ( isDefined( self.lives ) && self.lives > 0 )
+			{
+				self.waiting_to_revive = 1;
+				points = getstruct( "zone_pcr", "script_noteworthy" );
+				spawn_points = getstructarray( points.target, "targetname" );
+				point = spawn_points[ 0 ];
+				self dodamage( self.health + 1000, ( 0, 0, 0 ) );
+				maps/mp/_visionset_mgr::vsmgr_activate( "overlay", "zm_transit_burn", self, 1, level.zm_transit_burn_max_duration );
+				wait 0.5;
+				self freezecontrols( 1 );
+				wait 0.25;
+				self setorigin( point.origin + vectorScale( ( 0, 0, 1 ), 20 ) );
+				self.angles = point.angles;
+				if ( in_last_stand )
+				{
+					flag_set( "instant_revive" );
+					wait_network_frame();
+					flag_clear( "instant_revive" );
+				}
+				else
+				{
+					self thread maps/mp/zombies/_zm_laststand::auto_revive( self );
+					self.waiting_to_revive = 0;
+					self.solo_respawn = 0;
+					self.lives = 0;
+				}
+				self freezecontrols( 0 );
+				self.insta_killed = 0;
+			}
+			else
+			{
+				self dodamage( self.health + 1000, ( 0, 0, 0 ) );
+				maps/mp/_visionset_mgr::vsmgr_activate( "overlay", "zm_transit_burn", self, 2, level.zm_transit_burn_max_duration );
+			}
+		}
+		else
+		{
+			self dodamage( self.health + 1000, ( 0, 0, 0 ) );
+			maps/mp/_visionset_mgr::vsmgr_activate( "overlay", "zm_transit_burn", self, 1, level.zm_transit_burn_max_duration );
+			wait_network_frame();
+			self.bleedout_time = 0;
+		}
+		self notify( "burned" );
+		self.insta_killed = 0;
+	}
+}
+
+is_player_killable( player, checkignoremeflag ) //checked matches cerberus output
+{
+	if ( !isDefined( player ) )
+	{
+		return 0;
+	}
+	if ( !isalive( player ) )
+	{
+		return 0;
+	}
+	if ( !isplayer( player ) )
+	{
+		return 0;
+	}
+	if ( player.sessionstate == "spectator" )
+	{
+		return 0;
+	}
+	if ( player.sessionstate == "intermission" )
+	{
+		return 0;
+	}
+	if ( isDefined( checkignoremeflag ) && player.ignoreme )
+	{
+		return 0;
+	}
+	return 1;
 }
