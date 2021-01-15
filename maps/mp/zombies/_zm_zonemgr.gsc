@@ -534,20 +534,25 @@ connect_zones( zone_name_a, zone_name_b, one_way ) //checked matches cerberus ou
 
 manage_zones( initial_zone ) //checked changed to match cerberus output
 {
-	if ( !is_classic() && getDvar( "mapname" ) == "zm_transit" )
+	map = getDvar( "mapname" );
+	location = getDvar( "ui_zm_mapstartlocation" ); 
+	if ( map == "zm_transit" )
 	{
-		initial_zone = [];
-		initial_zone[ 0 ] = "zone_pri";
-		initial_zone[ 1 ] = "zone_station_ext";
-		initial_zone[ 2 ] = "zone_tow";
-		initial_zone[ 3 ] = "zone_far_ext";
-		initial_zone[ 4 ] = "zone_brn";
-		//Initialize cut location zones
-		////////////////////////////////////
-		initial_zone[ 5 ] = "zone_pow";
-		initial_zone[ 6 ] = "zone_pow_warehouse";
-		initial_zone[ 7 ] = "zone_amb_tunnel";
-		////////////////////////////////////
+		if ( location == "diner" || location == "cornfield" || location == "power" || location == "tunnel" )
+		{
+			initial_zone = [];
+			initial_zone[ 0 ] = "zone_pri";
+			initial_zone[ 1 ] = "zone_station_ext";
+			initial_zone[ 2 ] = "zone_tow";
+			initial_zone[ 3 ] = "zone_far_ext";
+			initial_zone[ 4 ] = "zone_brn";
+			//Initialize cut location zones
+			////////////////////////////////////
+			initial_zone[ 5 ] = "zone_pow";
+			initial_zone[ 6 ] = "zone_pow_warehouse";
+			initial_zone[ 7 ] = "zone_amb_tunnel";
+			////////////////////////////////////
+		}
 	}
 	deactivate_initial_barrier_goals();
 	zone_choke = 0;
