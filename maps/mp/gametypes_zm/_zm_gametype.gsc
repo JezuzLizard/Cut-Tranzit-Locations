@@ -27,9 +27,12 @@ main() //checked matches cerberus output
 {
 	location = getDvar( "ui_zm_mapstartlocation" );
 	map = getDvar( "mapname" );
-	if ( ( map == "zm_transit" && location == "diner" ) || ( map == "zm_transit" && location == "cornfield" ) || ( map == "zm_transit" && location == "power" ) || ( map == "zm_transit" && location == "tunnel" ) )
+	if ( map == "zm_transit" )
 	{
-		set_location_ents();
+		if ( location == "diner" ||  location == "cornfield" || location == "power" || location == "tunnel" )
+		{
+			set_location_ents();
+		}
 	}
 	maps/mp/gametypes_zm/_globallogic::init();
 	maps/mp/gametypes_zm/_callbacksetup::setupcallbacks();
