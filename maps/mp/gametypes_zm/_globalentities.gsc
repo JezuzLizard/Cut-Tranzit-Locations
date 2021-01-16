@@ -445,7 +445,7 @@ init_barriers_for_cut_locations() //custom function
 	{
 		case "tunnel":
 			_spawn_tranzit_barrier( ( -11250, -520, 255 ), "veh_t6_civ_movingtrk_cab_dead", ( 0, 172, 0 ) );
-			_spawn_tranzit_barrier( ( 11250, -580, 255 ), "collision_player_wall_256x256x10", ( 0, 180, 0 ) );
+			_spawn_tranzit_barrier( ( -11250, -580, 255 ), "collision_player_wall_256x256x10", ( 0, 180, 0 ) );
 			_spawn_tranzit_barrier( ( -11506, -580, 255 ), "collision_player_wall_256x256x10", ( 0, 180, 0 ) );
 			_spawn_tranzit_barrier( ( -10770, -3240, 255 ), "veh_t6_civ_movingtrk_cab_dead", ( 0, 214, 0 ) );
 			_spawn_tranzit_barrier( ( -10840, -3190, 255 ), "collision_player_wall_256x256x10", ( 0, 214, 0 ) );
