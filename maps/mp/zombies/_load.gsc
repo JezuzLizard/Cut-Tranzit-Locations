@@ -194,6 +194,25 @@ main( bscriptgened, bcsvgened, bsgenabled ) //checked partially changed to match
 		{
 			register_perk_structs();
 			register_spawnpoint_structs();
+			if ( is_true( level.grief_swap_jugg ) )
+			{
+				for ( i = 0; i < level.struct_class_names[ "targetname" ][ "zm_perk_machine" ].size; i++ )
+				{
+					if ( level.struct_class_names[ "targetname" ][ "zm_perk_machine" ][ i ].origin == ( 8216.6, -6410.6, 245 ) )
+					{
+						farm_jugg_index = i;
+						farm_jugg_origin = level.struct_class_names[ "targetname" ][ "zm_perk_machine" ][ i ].origin;
+					}
+					else if ( level.struct_class_names[ "targetname" ][ "zm_perk_machine" ][ i ].origin == ( 8053.1, -5459.5, 43.4 ) )
+					{
+						farm_quickrevive_index = i;
+						farm_quickrevive_origin = level.struct_class_names[ "targetname" ][ "zm_perk_machine" ][ i ].origin
+						break;
+					}
+				}
+				level.struct_class_names[ "targetname" ][ "zm_perk_machine" ][ farm_jugg_index ].origin = farm_quickrevive_origin;
+				level.struct_class_names[ "targetname" ][ "zm_perk_machine" ][ farm_quickrevive_index ].origin = farm_jugg_origin;
+			}
 		}
 	}
 	/////////////////////////////
@@ -619,6 +638,10 @@ register_spawnpoint_structs() //custom function
 
 _register_map_initial_spawnpoint( spawnpoint_coordinates, spawnpoint_angles ) //custom function
 {
+	if ( !isDefined( level.spawnpoint_index ) )
+	{
+		level.spawnpoint_index = 0;
+	}
 	spawnpoint_struct = spawnStruct();
 	spawnpoint_struct.origin = spawnpoint_coordinates;
 	spawnpoint_struct.angles = spawnpoint_angles;
@@ -627,10 +650,12 @@ _register_map_initial_spawnpoint( spawnpoint_coordinates, spawnpoint_angles ) //
 	spawnpoint_struct.script_int = 2048;
 	spawnpoint_struct.script_string = _get_spawnpoint_script_string_for_location( getDvar( "ui_zm_mapstartlocation" ), getDvar( "g_gametype" ) );
 	spawnpoint_struct.locked = 0;
+	spawnpoint_struct.en_num = level.spawnpoint_index;
 	player_respawn_point_size = level.struct_class_names[ "targetname" ][ "player_respawn_point" ].size;
 	player_initial_spawnpoint_size = level.struct_class_names[ "script_noteworthy" ][ "initial_spawn" ].size;
 	level.struct_class_names[ "targetname" ][ "player_respawn_point" ][ player_respawn_point_size ] = spawnpoint_struct;
 	level.struct_class_names[ "script_noteworthy" ][ "initial_spawn" ][ player_initial_spawnpoint_size ] = spawnpoint_struct;
+	level.spawnpoint_index++;
 }
 
 _get_spawnpoint_script_string_for_location( location, gametype )
