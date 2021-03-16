@@ -194,25 +194,6 @@ main( bscriptgened, bcsvgened, bsgenabled ) //checked partially changed to match
 		{
 			register_perk_structs();
 			register_spawnpoint_structs();
-			if ( is_true( level.grief_swap_jugg ) )
-			{
-				for ( i = 0; i < level.struct_class_names[ "targetname" ][ "zm_perk_machine" ].size; i++ )
-				{
-					if ( level.struct_class_names[ "targetname" ][ "zm_perk_machine" ][ i ].origin == ( 8216.6, -6410.6, 245 ) )
-					{
-						farm_jugg_index = i;
-						farm_jugg_origin = level.struct_class_names[ "targetname" ][ "zm_perk_machine" ][ i ].origin;
-					}
-					else if ( level.struct_class_names[ "targetname" ][ "zm_perk_machine" ][ i ].origin == ( 8053.1, -5459.5, 43.4 ) )
-					{
-						farm_quickrevive_index = i;
-						farm_quickrevive_origin = level.struct_class_names[ "targetname" ][ "zm_perk_machine" ][ i ].origin
-						break;
-					}
-				}
-				level.struct_class_names[ "targetname" ][ "zm_perk_machine" ][ farm_jugg_index ].origin = farm_quickrevive_origin;
-				level.struct_class_names[ "targetname" ][ "zm_perk_machine" ][ farm_quickrevive_index ].origin = farm_jugg_origin;
-			}
 		}
 	}
 	/////////////////////////////
