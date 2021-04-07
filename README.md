@@ -1,5 +1,7 @@
 # Cut-Tranzit-Survival-Maps
- Adds support for 4 cut Survival/Grief maps on Tranzit.
+Install each file to the same directory as the source is after compiling each file in t6r/data/maps.
+
+Adds support for 4 cut Survival/Grief maps on Tranzit.
 
 Each map has CIA/CDC, allows for hellhounds( survival-only ), has all 6 perks and pack-a-punch, and extra wallbuys.
 
@@ -27,3 +29,5 @@ map "zm_transit"
 ```
 
 Remove all other locations from ui_zm_mapstartlocation to load that map.
+
+For Plutonium custom match separate each line with a comma and paste them all in at once.
