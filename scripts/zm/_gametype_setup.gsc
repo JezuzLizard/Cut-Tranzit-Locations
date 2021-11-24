@@ -13,12 +13,12 @@
 
 main()
 {
-	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::rungametypeprecache, scripts/zm/grief/gametype_modules/_gametype_setup::rungametypeprecache_override );
-	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::rungametypemain, scripts/zm/grief/gametype_modules/_gametype_setup::rungametypemain_override );
-	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::game_objects_allowed, scripts/zm/grief/gametype_modules/_gametype_setup::game_objects_allowed_override );
-	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::setup_standard_objects, scripts/zm/grief/gametype_modules/_gametype_setup::setup_standard_objects_override );
-	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::setup_classic_gametype, scripts/zm/grief/gametype_modules/_gametype_setup::setup_classic_gametype_override );
-	replaceFunc( maps/mp/zombies/_zm_zonemgr::manage_zones, scripts/zm/grief/gametype_modules/_gametype_setup::manage_zones_override );
+	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::rungametypeprecache, ::rungametypeprecache_override );
+	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::rungametypemain, ::rungametypemain_override );
+	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::game_objects_allowed, ::game_objects_allowed_override );
+	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::setup_standard_objects, ::setup_standard_objects_override );
+	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::setup_classic_gametype, ::setup_classic_gametype_override );
+	replaceFunc( maps/mp/zombies/_zm_zonemgr::manage_zones, ::manage_zones_override );
 }
 
 add_struct( s_struct )

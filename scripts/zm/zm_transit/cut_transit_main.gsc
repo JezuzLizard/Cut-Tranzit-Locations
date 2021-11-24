@@ -1,6 +1,8 @@
-#include scripts/zm/promod/_utility;
 #include scripts/zm/zm_transit/gamemodes;
 #include scripts/zm/zm_transit/locs/location_common;
+#include maps/mp/zombies/_zm_utility;
+#include maps/mp/_utility;
+#include common_scripts/utility;
 
 main()
 {
