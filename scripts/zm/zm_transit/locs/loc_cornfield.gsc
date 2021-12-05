@@ -2,17 +2,20 @@
 #include common_scripts/utility;
 #include maps/mp/_utility;
 #include maps/mp/zombies/_zm;
-#include scripts/zm/promod/_gametype_setup;
+#include scripts/zm/_gametype_setup;
 
 struct_init()
 {
-	scripts/zm/_gametype_setup::register_perk_struct( "specialty_armorvest", "zombie_vending_jugg", ( 0, 179, 0 ), ( 13936, -649, -189 ) );
-	scripts/zm/_gametype_setup::register_perk_struct( "specialty_rof", "zombie_vending_doubletap2", ( 0, -137, 0 ), ( 12052, -1943, -160 ) );
-	scripts/zm/_gametype_setup::register_perk_struct( "specialty_longersprint", "zombie_vending_marathon", ( 0, -35, 0 ), ( 9944, -725, -211 ) );
-	scripts/zm/_gametype_setup::register_perk_struct( "specialty_scavenger", "zombie_vending_tombstone", ( 0, 133, 0 ), ( 13551, -1384, -188 ) );
-	scripts/zm/_gametype_setup::register_perk_struct( "specialty_weapupgrade", "p6_anim_zm_buildable_pap_on", ( 0, 123, 0), ( 9960, -1288, -217 ) );
-	scripts/zm/_gametype_setup::register_perk_struct( "specialty_quickrevive", "zombie_vending_quickrevive", ( 0, -90, 0 ), ( 7831, -464, -203 ) );
-	scripts/zm/_gametype_setup::register_perk_struct( "specialty_fastreload", "zombie_vending_sleight", ( 0, -4, 0 ), ( 13255, 74, -195 ) );
+	if ( !is_true( level.ctsm_disable_custom_perk_locations ) )
+	{
+		scripts/zm/_gametype_setup::register_perk_struct( "specialty_armorvest", "zombie_vending_jugg", ( 0, 179, 0 ), ( 13936, -649, -189 ) );
+		scripts/zm/_gametype_setup::register_perk_struct( "specialty_rof", "zombie_vending_doubletap2", ( 0, -137, 0 ), ( 12052, -1943, -160 ) );
+		scripts/zm/_gametype_setup::register_perk_struct( "specialty_longersprint", "zombie_vending_marathon", ( 0, -35, 0 ), ( 9944, -725, -211 ) );
+		scripts/zm/_gametype_setup::register_perk_struct( "specialty_scavenger", "zombie_vending_tombstone", ( 0, 133, 0 ), ( 13551, -1384, -188 ) );
+		scripts/zm/_gametype_setup::register_perk_struct( "specialty_weapupgrade", "p6_anim_zm_buildable_pap_on", ( 0, 123, 0), ( 9960, -1288, -217 ) );
+		scripts/zm/_gametype_setup::register_perk_struct( "specialty_quickrevive", "zombie_vending_quickrevive", ( 0, -90, 0 ), ( 7831, -464, -203 ) );
+		scripts/zm/_gametype_setup::register_perk_struct( "specialty_fastreload", "zombie_vending_sleight", ( 0, -4, 0 ), ( 13255, 74, -195 ) );
+	}
 	coordinates = array( ( 7521, -545, -198 ), ( 7751, -522, -202 ), ( 7691, -395, -201 ), ( 7536, -432, -199 ), 
 							( 13745, -336, -188 ), ( 13758, -681, -188 ), ( 13816, -1088, -189 ), ( 13752, -1444, -182 ) );
 	angles = array( ( 0, 40, 0 ), ( 0, 145, 0 ), ( 0, -131, 0 ), ( 0, -24, 0 ), ( 0, -178, 0 ), ( 0, -179, 0 ), ( 0, -177, 0 ), ( 0, -177, 0 ) );
@@ -20,21 +23,18 @@ struct_init()
 	{
 		scripts/zm/_gametype_setup::register_map_initial_spawnpoint( coordinates[ i ], angles[ i ] );
 	}
-
-	initial_zone[ 0 ] = "zone_pri";
-	initial_zone[ 1 ] = "zone_station_ext";
-	initial_zone[ 2 ] = "zone_tow";
-	initial_zone[ 3 ] = "zone_far_ext";
-	initial_zone[ 4 ] = "zone_brn";
-	//Initialize cut location zones
-	////////////////////////////////////
+	structs = getstructarray( "game_mode_object", "targetname" );
+	foreach ( struct in structs )
+	{
+		if ( struct.script_noteworthy == "cornfield" )
+		{
+			struct.script_string = "zstandard zgrief";
+		}
+	}
 }
 
 precache()
 {
-	level.delayed_struct_add_funcs = [];
-	level.delayed_struct_add_funcs[ 1 ] = ::cornfield_structs;
-	level notify( "delayed_struct_definitions" );
 	start_chest_zbarrier = getEnt( "start_chest_zbarrier", "script_noteworthy" );
 	start_chest_zbarrier.origin = ( 13566, -541, -188 );
 	start_chest_zbarrier.angles = ( 0, -90, 0 );
@@ -105,6 +105,7 @@ cornfield_main()
 {
 	init_wallbuys();
 	init_barriers();
+	setup_standard_objects_override( "cornfield" );
 	maps/mp/zombies/_zm_magicbox::treasure_chest_init( random( array( "start_chest", "farm_chest", "depot_chest" ) ) );
 	scripts/zm/zm_transit/locs/location_common::common_init();
 	level thread increase_cornfield_zombie_speed();
@@ -158,13 +159,12 @@ init_wallbuys()
 
 init_barriers()
 {
-	scripts/zm/_gametype_setup::barrier( ( 10190, 135, -159 ), "veh_t6_civ_movingtrk_cab_dead", ( 0, 172, 0 ) );
-	scripts/zm/_gametype_setup::barrier( ( 10100, 100, -159 ), "collision_player_wall_512x512x10", ( 0, 172, 0 ) );
-	scripts/zm/_gametype_setup::barrier( ( 10100, -1800, -217 ), "veh_t6_civ_bus_zombie", ( 0, 126, 0 ), 1 );
-	scripts/zm/_gametype_setup::barrier( ( 10045, -1607, -181 ), "collision_player_wall_512x512x10", ( 0, 126, 0 ) );
-}
-
-cornfield_structs()
-{
-
+	// scripts/zm/_gametype_setup::barrier( ( 10190, 135, -159 ), "veh_t6_civ_movingtrk_cab_dead", ( 0, 172, 0 ) );
+	// scripts/zm/_gametype_setup::barrier( ( 10100, 100, -159 ), "collision_player_wall_512x512x10", ( 0, 172, 0 ) );
+	// scripts/zm/_gametype_setup::barrier( ( 10100, -1800, -217 ), "veh_t6_civ_bus_zombie", ( 0, 126, 0 ), 1 );
+	// scripts/zm/_gametype_setup::barrier( ( 10045, -1607, -181 ), "collision_player_wall_512x512x10", ( 0, 126, 0 ) );
+	precacheModel( "zm_collision_transit_cornfield_survival" );
+	collision = Spawn( "script_model", (10500, -850, 0 ), 1 );
+	collision SetModel( "zm_collision_transit_cornfield_survival" );
+	collision DisconnectPaths();	
 }

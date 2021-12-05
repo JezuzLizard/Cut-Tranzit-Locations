@@ -6,13 +6,16 @@
 
 struct_init()
 {
-	scripts/zm/_gametype_setup::register_perk_struct( "specialty_armorvest", "zombie_vending_jugg", ( 0, -180, 0 ), ( -11541, -2630, 194 ) );
-	scripts/zm/_gametype_setup::register_perk_struct( "specialty_rof", "zombie_vending_doubletap2", ( 0, -10, 0 ), ( -11170, -590, 196 ) );
-	scripts/zm/_gametype_setup::register_perk_struct( "specialty_longersprint", "zombie_vending_marathon", ( 0, -19, 0 ), ( -11681, -734, 228 ) );
-	scripts/zm/_gametype_setup::register_perk_struct( "specialty_scavenger", "zombie_vending_tombstone", ( 0, -98, 0 ), ( -10664, -757, 196 ) );
-	scripts/zm/_gametype_setup::register_perk_struct( "specialty_weapupgrade", "p6_anim_zm_buildable_pap_on", ( 0, 115, 0 ), ( -11301, -2096, 184 ) );
-	scripts/zm/_gametype_setup::register_perk_struct( "specialty_quickrevive", "zombie_vending_quickrevive", ( 0, 270, 0 ), ( -10780, -2565, 224 ) );
-	scripts/zm/_gametype_setup::register_perk_struct( "specialty_fastreload", "zombie_vending_sleight", ( 0, -89, 0 ), ( -11373, -1674, 192 ) );
+	if ( !is_true( level.ctsm_disable_custom_perk_locations ) )
+	{
+		scripts/zm/_gametype_setup::register_perk_struct( "specialty_armorvest", "zombie_vending_jugg", ( 0, -180, 0 ), ( -11541, -2630, 194 ) );
+		scripts/zm/_gametype_setup::register_perk_struct( "specialty_rof", "zombie_vending_doubletap2", ( 0, -10, 0 ), ( -11170, -590, 196 ) );
+		scripts/zm/_gametype_setup::register_perk_struct( "specialty_longersprint", "zombie_vending_marathon", ( 0, -19, 0 ), ( -11681, -734, 228 ) );
+		scripts/zm/_gametype_setup::register_perk_struct( "specialty_scavenger", "zombie_vending_tombstone", ( 0, -98, 0 ), ( -10664, -757, 196 ) );
+		scripts/zm/_gametype_setup::register_perk_struct( "specialty_weapupgrade", "p6_anim_zm_buildable_pap_on", ( 0, 115, 0 ), ( -11301, -2096, 184 ) );
+		scripts/zm/_gametype_setup::register_perk_struct( "specialty_quickrevive", "zombie_vending_quickrevive", ( 0, 270, 0 ), ( -10780, -2565, 224 ) );
+		scripts/zm/_gametype_setup::register_perk_struct( "specialty_fastreload", "zombie_vending_sleight", ( 0, -89, 0 ), ( -11373, -1674, 192 ) );
+	}
 	coordinates = array( ( -11196, -837, 192 ), ( -11386, -863, 192 ), ( -11405, -1000, 192 ), ( -11498, -1151, 192 ),
 							( -11398, -1326, 191 ), ( -11222, -1345, 192 ), ( -10934, -1380, 192 ), ( -10999, -1072, 192 ) );
 	angles = array( ( 0, -94, 0 ), ( 0, -44, 0 ), ( 0, -32, 0 ), ( 0, 4, 0 ), ( 0, 50, 0 ), ( 0, 157, 0 ), ( 0, -144, 0 ) );		
@@ -95,4 +98,14 @@ init_barriers() //custom function
 	scripts/zm/_gametype_setup::barrier( ( -11506, -580, 255 ), "collision_player_wall_256x256x10", ( 0, 180, 0 ) );
 	scripts/zm/_gametype_setup::barrier( ( -10770, -3240, 255 ), "veh_t6_civ_movingtrk_cab_dead", ( 0, 214, 0 ) );
 	scripts/zm/_gametype_setup::barrier( ( -10840, -3190, 255 ), "collision_player_wall_256x256x10", ( 0, 214, 0 ) );
+	level thread delete_barriers_on_end_game();
+}
+
+delete_barriers_on_end_game()
+{
+	level waittill( "intermission" );
+	foreach ( barrier in level.survival_barriers )
+	{
+		barrier delete();
+	}
 }

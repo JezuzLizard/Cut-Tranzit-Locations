@@ -77,6 +77,16 @@ register_perk_struct( perk_name, perk_model, perk_angles, perk_coordinates )
 	perk_struct.angles = perk_angles;
 	perk_struct.origin = perk_coordinates;
 	perk_struct.targetname = "zm_perk_machine";
+	// if ( perk_name == "specialty_weapupgrade" )
+	// {
+	// 	perk_struct.target = "weapupgrade_flag_targ";
+	// 	flag = spawnStruct();
+	// 	flag.targetname = "weapupgrade_flag_targ";
+	// 	flag.model = "zombie_sign_please_wait";
+	// 	flag.angles = ( 0, perk_angles[ 1 ] - 180, perk_angles[ 2 ] - 180 );
+	// 	flag.origin = ( perk_coordinates[ 0 ] + 13.5, perk_coordinates[ 1 ] - 29, perk_coordinates[ 2 ] + 49.5 );
+	// 	add_struct( flag );
+	// }
 	add_struct( perk_struct );
 }
 
@@ -474,18 +484,19 @@ setup_standard_objects_override( location )
 		}
 		if ( isdefined( structs[ i ].script_string ) )
 		{
-			keep = 0;
+			keep = false;
 			tokens = strtok( structs[ i ].script_string, " " );
 			foreach ( token in tokens )
 			{
 				if ( token == level.scr_zm_ui_gametype && token != "zstandard" )
 				{
-					keep = 1;
-					continue;
+					keep = true;
+					break;
 				}
 				else if ( token == "zstandard" )
 				{
-					keep = 1;
+					keep = true;
+					break;
 				}
 			}
 			if ( !keep )
