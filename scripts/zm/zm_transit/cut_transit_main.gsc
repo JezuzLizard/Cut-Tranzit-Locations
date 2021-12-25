@@ -48,6 +48,15 @@ main()
 
 init()
 {
-	scripts/zm/zm_transit/locs/loc_tunnel::enable_zones();
-	scripts/zm/zm_transit/locs/loc_power::enable_zones();
+	location = getDvar( "ui_zm_mapstartlocation" );
+	switch ( location )
+	{
+		case "tunnel":
+			scripts/zm/zm_transit/locs/loc_tunnel::enable_zones();
+			break;
+		case "power":
+			scripts/zm/zm_transit/locs/loc_power::enable_zones();
+			break;
+		default:
+			break;
 }
