@@ -23,8 +23,6 @@ struct_init()
 	{
 		scripts/zm/_gametype_setup::register_map_initial_spawnpoint( coordinates[ i ], angles[ i ] );
 	}
-	level.location_zones = [];
-	level.location_zones[ 0 ] = "zone_amb_tunnel";
 }
 
 precache()
@@ -80,6 +78,8 @@ tunnel_main()
 	init_barriers();
 	maps/mp/zombies/_zm_magicbox::treasure_chest_init( random( array( "farm_chest", "start_chest" ) ) );
 	scripts/zm/zm_transit/locs/location_common::common_init();
+	zone_init( "zone_amb_tunnel" );
+	enable_zone( "zone_amb_tunnel" );
 }
 
 init_wallbuys()

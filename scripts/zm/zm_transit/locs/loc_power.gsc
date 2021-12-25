@@ -34,9 +34,6 @@ struct_init()
 	{
 		scripts/zm/_gametype_setup::register_map_initial_spawnpoint( coordinates[ i ], angles[ i ] );
 	}
-	level.location_zones = [];
-	level.location_zones[ 0 ] = "zone_pow";
-	level.location_zones[ 1 ] = "zone_pow_warehouse";
 }
 
 precache()
@@ -74,6 +71,10 @@ power_main()
 	init_barriers();
 	maps/mp/zombies/_zm_magicbox::treasure_chest_init( "pow_chest" );
 	scripts/zm/zm_transit/locs/location_common::common_init();
+	zone_init( "zone_pow" );
+	enable_zone( "zone_pow" );
+	zone_init( "zone_pow_warehouse" );
+	enable_zone( "zone_pow_warehouse" );
 }
 
 init_wallbuys()
