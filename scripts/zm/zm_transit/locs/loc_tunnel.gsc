@@ -3,6 +3,7 @@
 #include common_scripts/utility;
 #include maps/mp/_utility;
 #include maps/mp/zombies/_zm;
+#include maps/mp/zombies/_zm_zonemgr;
 
 struct_init()
 {
@@ -74,12 +75,12 @@ precache()
 
 tunnel_main()
 {
+	zone_init( "zone_amb_tunnel" );
+	enable_zone( "zone_amb_tunnel" );
 	init_wallbuys();
 	init_barriers();
 	maps/mp/zombies/_zm_magicbox::treasure_chest_init( random( array( "farm_chest", "start_chest" ) ) );
 	scripts/zm/zm_transit/locs/location_common::common_init();
-	zone_init( "zone_amb_tunnel" );
-	enable_zone( "zone_amb_tunnel" );
 }
 
 init_wallbuys()

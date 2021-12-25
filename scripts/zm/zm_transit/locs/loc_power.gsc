@@ -4,6 +4,7 @@
 #include maps/mp/_utility;
 #include maps/mp/zombies/_zm;
 #include scripts/zm/_gametype_setup;
+#include maps/mp/zombies/_zm_zonemgr;
 
 struct_init()
 {
@@ -66,15 +67,15 @@ precache()
 
 power_main()
 {
+	zone_init( "zone_pow" );
+	enable_zone( "zone_pow" );
+	zone_init( "zone_pow_warehouse" );
+	enable_zone( "zone_pow_warehouse" );
 	level thread falling_death_init();
 	init_wallbuys();
 	init_barriers();
 	maps/mp/zombies/_zm_magicbox::treasure_chest_init( "pow_chest" );
 	scripts/zm/zm_transit/locs/location_common::common_init();
-	zone_init( "zone_pow" );
-	enable_zone( "zone_pow" );
-	zone_init( "zone_pow_warehouse" );
-	enable_zone( "zone_pow_warehouse" );
 }
 
 init_wallbuys()
