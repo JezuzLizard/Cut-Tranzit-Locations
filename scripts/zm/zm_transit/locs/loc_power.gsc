@@ -65,12 +65,16 @@ precache()
 	level.chests[ 1 ] = start_chest;
 }
 
-power_main()
+enable_zones()
 {
 	zone_init( "zone_pow" );
 	enable_zone( "zone_pow" );
 	zone_init( "zone_pow_warehouse" );
 	enable_zone( "zone_pow_warehouse" );
+}
+
+power_main()
+{
 	level thread falling_death_init();
 	init_wallbuys();
 	init_barriers();

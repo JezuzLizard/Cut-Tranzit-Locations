@@ -3,6 +3,13 @@
 #include maps/mp/zombies/_zm_utility;
 #include maps/mp/_utility;
 #include common_scripts/utility;
+#include scripts/zm/zm_transit/locs/loc_cornfield;
+#include scripts/zm/zm_transit/locs/loc_diner;
+#include scripts/zm/zm_transit/locs/loc_farm;
+#include scripts/zm/zm_transit/locs/loc_power;
+#include scripts/zm/zm_transit/locs/loc_town;
+#include scripts/zm/zm_transit/locs/loc_transit;
+#include scripts/zm/zm_transit/locs/loc_tunnel;
 
 main()
 {
@@ -37,4 +44,10 @@ main()
 		default:
 			break;
 	}
+}
+
+init()
+{
+	scripts/zm/zm_transit/locs/loc_tunnel::enable_zones();
+	scripts/zm/zm_transit/locs/loc_power::enable_zones();
 }

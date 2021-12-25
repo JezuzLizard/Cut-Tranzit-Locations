@@ -73,10 +73,14 @@ precache()
 	level.chests[ 1 ] = start_chest2;
 }
 
-tunnel_main()
+enable_zones()
 {
 	zone_init( "zone_amb_tunnel" );
 	enable_zone( "zone_amb_tunnel" );
+}
+
+tunnel_main()
+{
 	init_wallbuys();
 	init_barriers();
 	maps/mp/zombies/_zm_magicbox::treasure_chest_init( random( array( "farm_chest", "start_chest" ) ) );
