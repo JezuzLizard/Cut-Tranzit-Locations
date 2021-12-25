@@ -13,11 +13,75 @@
 
 main()
 {
-	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::rungametypeprecache, ::rungametypeprecache_override );
-	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::rungametypemain, ::rungametypemain_override );
-	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::game_objects_allowed, ::game_objects_allowed_override );
-	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::setup_standard_objects, ::setup_standard_objects_override );
-	replaceFunc( maps/mp/gametypes_zm/_zm_gametype::setup_classic_gametype, ::setup_classic_gametype_override );
+	replaceFunc( common_scripts/utility::struct_class_init, ::struct_class_init_override );
+}
+
+struct_class_init_override()
+{
+	level.struct_class_names = [];
+	level.struct_class_names[ "target" ] = [];
+	level.struct_class_names[ "targetname" ] = [];
+	level.struct_class_names[ "script_noteworthy" ] = [];
+	level.struct_class_names[ "script_linkname" ] = [];
+	level.struct_class_names[ "script_unitrigger_type" ] = [];
+	foreach ( s_struct in level.struct )
+	{
+		if ( isDefined( s_struct.targetname ) )
+		{
+			if ( !isDefined( level.struct_class_names[ "targetname" ][ s_struct.targetname ] ) )
+			{
+				level.struct_class_names[ "targetname" ][ s_struct.targetname ] = [];
+			}
+			size = level.struct_class_names[ "targetname" ][ s_struct.targetname ].size;
+			level.struct_class_names[ "targetname" ][ s_struct.targetname ][ size ] = s_struct;
+		}
+		if ( isDefined( s_struct.target ) )
+		{
+			if ( !isDefined( level.struct_class_names[ "target" ][ s_struct.target ] ) )
+			{
+				level.struct_class_names[ "target" ][ s_struct.target ] = [];
+			}
+			size = level.struct_class_names[ "target" ][ s_struct.target ].size;
+			level.struct_class_names[ "target" ][ s_struct.target ][ size ] = s_struct;
+		}
+		if ( isDefined( s_struct.script_noteworthy ) )
+		{
+			if ( !isDefined( level.struct_class_names[ "script_noteworthy" ][ s_struct.script_noteworthy ] ) )
+			{
+				level.struct_class_names[ "script_noteworthy" ][ s_struct.script_noteworthy ] = [];
+			}
+			size = level.struct_class_names[ "script_noteworthy" ][ s_struct.script_noteworthy ].size;
+			level.struct_class_names[ "script_noteworthy" ][ s_struct.script_noteworthy ][ size ] = s_struct;
+		}
+		if ( isDefined( s_struct.script_linkname ) )
+		{
+			level.struct_class_names[ "script_linkname" ][ s_struct.script_linkname ][ 0 ] = s_struct;
+		}
+		if ( isDefined( s_struct.script_unitrigger_type ) )
+		{
+			if ( !isDefined( level.struct_class_names[ "script_unitrigger_type" ][ s_struct.script_unitrigger_type ] ) )
+			{
+				level.struct_class_names[ "script_unitrigger_type" ][ s_struct.script_unitrigger_type ] = [];
+			}
+			size = level.struct_class_names[ "script_unitrigger_type" ][ s_struct.script_unitrigger_type ].size;
+			level.struct_class_names[ "script_unitrigger_type" ][ s_struct.script_unitrigger_type ][ size ] = s_struct;
+		}
+	}
+	gametype = getDvar( "g_gametype" );
+	location = getDvar( "ui_zm_mapstartlocation" );
+	if ( array_validate( level.add_struct_gamemode_location_funcs ) )
+	{
+		if ( array_validate( level.add_struct_gamemode_location_funcs[ gametype ] ) )
+		{
+			if ( array_validate( level.add_struct_gamemode_location_funcs[ gametype ][ location ] ) )
+			{
+				for ( i = 0; i < level.add_struct_gamemode_location_funcs[ gametype ][ location ].size; i++ )
+				{
+					[[ level.add_struct_gamemode_location_funcs[ gametype ][ location ][ i ] ]]();
+				}
+			}
+		}
+	}
 }
 
 add_struct( s_struct )
@@ -230,241 +294,4 @@ add_struct_location_gamemode_func( gametype, location, func )
 		level.add_struct_gamemode_location_funcs[ gametype ][ location ] = [];
 	}
 	level.add_struct_gamemode_location_funcs[ gametype ][ location ][ level.add_struct_gamemode_location_funcs[ gametype ][ location ].size ] = func;
-}
-
-rungametypeprecache_override( gamemode )
-{
-	if ( !isDefined( level.gamemode_map_location_main ) || !isDefined( level.gamemode_map_location_main[ gamemode ] ) )
-	{
-		return;
-	}
-	if ( isDefined( level.gamemode_map_precache ) )
-	{
-		if ( isDefined( level.gamemode_map_precache[ gamemode ] ) )
-		{
-			[[ level.gamemode_map_precache[ gamemode ] ]]();
-		}
-	}
-	if ( isDefined( level.gamemode_map_location_precache ) )
-	{
-		if ( isDefined( level.gamemode_map_location_precache[ gamemode ] ) )
-		{
-			loc = getDvar( "ui_zm_mapstartlocation" );
-			if ( loc == "" && isDefined( level.default_start_location ) )
-			{
-				loc = level.default_start_location;
-			}
-			if ( isDefined( level.gamemode_map_location_precache[ gamemode ][ loc ] ) )
-			{
-				[[ level.gamemode_map_location_precache[ gamemode ][ loc ] ]]();
-			}
-		}
-	}
-	if ( isDefined( level.precachecustomcharacters ) )
-	{
-		self [[ level.precachecustomcharacters ]]();
-	}
-}
-
-rungametypemain_override( gamemode, mode_main_func, use_round_logic )
-{
-	if ( !isDefined( level.gamemode_map_location_main ) || !isDefined( level.gamemode_map_location_main[ gamemode ] ) )
-	{
-		return;
-	}
-	level thread game_objects_allowed_override( getDvar( "g_gametype" ), getDvar( "ui_zm_mapstartlocation" ) );
-	if ( isDefined( level.gamemode_map_main ) )
-	{
-		if ( isDefined( level.gamemode_map_main[ gamemode ] ) )
-		{
-			level thread [[ level.gamemode_map_main[ gamemode ] ]]();
-		}
-	}
-	if ( isDefined( level.gamemode_map_location_main ) )
-	{
-		if ( isDefined( level.gamemode_map_location_main[ gamemode ] ) )
-		{
-			loc = getDvar( "ui_zm_mapstartlocation" );
-			if ( loc == "" && isDefined( level.default_start_location ) )
-			{
-				loc = level.default_start_location;
-			}
-			if ( isDefined( level.gamemode_map_location_main[ gamemode ][ loc ] ) )
-			{
-				level thread [[ level.gamemode_map_location_main[ gamemode ][ loc ] ]]();
-			}
-		}
-	}
-	if ( isDefined( mode_main_func ) )
-	{
-		level thread [[ mode_logic_func ]]();
-	}
-}
-
-game_objects_allowed_override( mode, location )
-{
-	if ( location == "transit" )
-	{
-		location = "station";
-	}
-	allowed = [];
-	allowed[ 0 ] = mode;
-	entities = getentarray();
-	i = 0;
-	while ( i < entities.size )
-	{
-		if ( isDefined( entities[ i ].script_gameobjectname ) )
-		{
-			isallowed = maps/mp/gametypes_zm/_gameobjects::entity_is_allowed( entities[ i ], allowed );
-			isvalidlocation = maps/mp/gametypes_zm/_gameobjects::location_is_allowed( entities[ i ], location );
-			if ( !isallowed || !isvalidlocation && !is_classic() )
-			{
-				if ( isDefined( entities[ i ].spawnflags ) && entities[ i ].spawnflags == 1 )
-				{
-					if ( isDefined( entities[ i ].classname ) && entities[ i ].classname != "trigger_multiple" )
-					{
-						entities[ i ] connectpaths();
-					}
-				}
-				entities[ i ] delete();
-				i++;
-				continue;
-			}
-			if ( isDefined( entities[ i ].script_vector ) )
-			{
-				entities[ i ] moveto( entities[ i ].origin + entities[ i ].script_vector, 0.05 );
-				entities[ i ] waittill( "movedone" );
-				if ( isDefined( entities[ i ].spawnflags ) && entities[ i ].spawnflags == 1 )
-				{
-					entities[ i ] disconnectpaths();
-				}
-				i++;
-				continue;
-			}
-			if ( isDefined( entities[ i ].spawnflags ) && entities[ i ].spawnflags == 1 )
-			{
-				if ( isDefined( entities[ i ].classname ) && entities[ i ].classname != "trigger_multiple" )
-				{
-					entities[ i ] connectpaths();
-				}
-			}
-		}
-		i++;
-	}
-}
-
-setup_standard_objects_override( location )
-{
-	structs = getstructarray( "game_mode_object" );
-	i = 0;
-	while ( i < structs.size )
-	{
-		if ( isdefined( structs[ i ].script_noteworthy ) && structs[ i ].script_noteworthy != location )
-		{
-			i++;
-			continue;
-		}
-		if ( isdefined( structs[ i ].script_string ) )
-		{
-			keep = false;
-			tokens = strtok( structs[ i ].script_string, " " );
-			foreach ( token in tokens )
-			{
-				if ( token == level.scr_zm_ui_gametype && token != "zstandard" )
-				{
-					keep = true;
-					break;
-				}
-				else if ( token == "zstandard" )
-				{
-					keep = true;
-					break;
-				}
-			}
-			if ( !keep )
-			{
-				i++;
-				continue;
-			}
-		}
-		barricade = spawn( "script_model", structs[ i ].origin );
-		barricade.angles = structs[ i ].angles;
-		barricade setmodel( structs[ i ].script_parameters );
-		i++;
-	}
-	objects = getentarray();
-	i = 0;
-	while ( i < objects.size )
-	{
-		if ( !objects[ i ] is_survival_object() )
-		{
-			i++;
-			continue;
-		}
-		if ( isdefined( objects[ i ].spawnflags ) && objects[ i ].spawnflags == 1 && objects[ i ].classname != "trigger_multiple" )
-		{
-			objects[ i ] connectpaths();
-		}
-		objects[ i ] delete();
-		i++;
-	}
-	if ( isdefined( level._classic_setup_func ) )
-	{
-		[[ level._classic_setup_func ]]();
-	}
-}
-
-setup_classic_gametype_override()
-{
-	ents = getentarray();
-	i = 0;
-	while ( i < ents.size )
-	{
-		if ( isDefined( ents[ i ].script_parameters ) )
-		{
-			parameters = strtok( ents[ i ].script_parameters, " " );
-			should_remove = 0;
-			foreach ( parm in parameters )
-			{
-				if ( parm == "survival_remove" )
-				{
-					should_remove = 1;
-				}
-			}
-			if ( should_remove )
-			{
-				ents[ i ] delete();
-			}
-		}
-		i++;
-	}
-	structs = getstructarray( "game_mode_object" );
-	i = 0;
-	while ( i < structs.size )
-	{
-		if ( !isdefined( structs[ i ].script_string ) )
-		{
-			i++;
-			continue;
-		}
-		tokens = strtok( structs[ i ].script_string, " " );
-		spawn_object = 0;
-		foreach ( parm in tokens )
-		{
-			if ( parm == "survival" )
-			{
-				spawn_object = 1;
-			}
-		}
-		if ( !spawn_object )
-		{
-			i++;
-			continue;
-		}
-		barricade = spawn( "script_model", structs[ i ].origin );
-		barricade.angles = structs[ i ].angles;
-		barricade setmodel( structs[ i ].script_parameters );
-		i++;
-	}
-	unlink_meat_traversal_nodes();
 }
