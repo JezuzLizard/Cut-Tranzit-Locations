@@ -3,6 +3,7 @@
 #include maps/mp/_utility;
 #include maps/mp/zombies/_zm;
 #include scripts/zm/_gametype_setup;
+#include maps/mp/gametypes_zm/_zm_gametype;
 
 struct_init()
 {
@@ -105,48 +106,47 @@ cornfield_main()
 {
 	init_wallbuys();
 	init_barriers();
-	setup_standard_objects_override( "cornfield" );
+	setup_standard_objects( "cornfield" );
 	maps/mp/zombies/_zm_magicbox::treasure_chest_init( random( array( "start_chest", "farm_chest", "depot_chest" ) ) );
 	scripts/zm/zm_transit/locs/location_common::common_init();
-	level thread increase_cornfield_zombie_speed();
 }
 
-zombie_speed_up_distance_check()
-{
-	if ( distance( self.origin, self.closestPlayer.origin ) > 1000 )
-	{
-		return 1;
-	}
-	return 0;
-}
+// zombie_speed_up_distance_check()
+// {
+// 	if ( distance( self.origin, self.closestPlayer.origin ) > 1000 )
+// 	{
+// 		return 1;
+// 	}
+// 	return 0;
+// }
 
-increase_cornfield_zombie_speed()
-{
-	level endon( "end_game" );
-	level.zombie_vars[ "zombie_spawn_delay" ] = 0.08;
-	level.speed_change_round = undefined;
-	while ( 1 )
-	{
-		zombies = get_round_enemy_array();
-		for ( i = 0; i < zombies.size; i++ )
-		{
-			zombies[ i ].closestPlayer = get_closest_valid_player( zombies[ i ].origin );
-		}
-		zombies = get_round_enemy_array();
-		for ( i = 0; i < zombies.size; i++ )
-		{
-			if ( zombies[ i ] zombie_speed_up_distance_check() )
-			{
-				zombies[ i ] set_zombie_run_cycle( "chase_bus" );
-			}
-			else if ( zombies[ i ].zombie_move_speed != "sprint" )
-			{
-				zombies[ i ] set_zombie_run_cycle( "sprint" );
-			}
-		}
-		wait 1;
-	}
-}
+// increase_cornfield_zombie_speed()
+// {
+// 	level endon( "end_game" );
+// 	level.zombie_vars[ "zombie_spawn_delay" ] = 0.08;
+// 	level.speed_change_round = undefined;
+// 	while ( 1 )
+// 	{
+// 		zombies = get_round_enemy_array();
+// 		for ( i = 0; i < zombies.size; i++ )
+// 		{
+// 			zombies[ i ].closestPlayer = get_closest_valid_player( zombies[ i ].origin );
+// 		}
+// 		zombies = get_round_enemy_array();
+// 		for ( i = 0; i < zombies.size; i++ )
+// 		{
+// 			if ( zombies[ i ] zombie_speed_up_distance_check() )
+// 			{
+// 				zombies[ i ] set_zombie_run_cycle( "chase_bus" );
+// 			}
+// 			else if ( zombies[ i ].zombie_move_speed != "sprint" )
+// 			{
+// 				zombies[ i ] set_zombie_run_cycle( "sprint" );
+// 			}
+// 		}
+// 		wait 1;
+// 	}
+// }
 
 init_wallbuys()
 {
@@ -164,7 +164,7 @@ init_barriers()
 	// scripts/zm/_gametype_setup::barrier( ( 10100, -1800, -217 ), "veh_t6_civ_bus_zombie", ( 0, 126, 0 ), 1 );
 	// scripts/zm/_gametype_setup::barrier( ( 10045, -1607, -181 ), "collision_player_wall_512x512x10", ( 0, 126, 0 ) );
 	precacheModel( "zm_collision_transit_cornfield_survival" );
-	collision = Spawn( "script_model", (10500, -850, 0 ), 1 );
+	collision = Spawn( "script_model", ( 10500, -850, 0 ), 1 );
 	collision SetModel( "zm_collision_transit_cornfield_survival" );
 	collision DisconnectPaths();	
 }
