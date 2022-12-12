@@ -1,19 +1,19 @@
-#include maps/mp/zombies/_load;
-#include maps/mp/_utility;
-#include common_scripts/utility;
-#include maps/mp/zombies/_zm_zonemgr;
-#include maps/mp/gametypes_zm/_zm_gametype;
-#include maps/mp/zombies/_zm_utility;
-#include maps/mp/zombies/_zm_weapons;
-#include maps/mp/zombies/_zm_melee_weapon;
-#include maps/mp/zombies/_zm_weap_claymore;
-#include maps/mp/zombies/_zm_weap_ballistic_knife;
-#include maps/mp/zombies/_zm_equipment;
-#include maps/mp/zombies/_zm_magicbox;
+#include maps\mp\zombies\_load;
+#include maps\mp\_utility;
+#include common_scripts\utility;
+#include maps\mp\zombies\_zm_zonemgr;
+#include maps\mp\gametypes_zm\_zm_gametype;
+#include maps\mp\zombies\_zm_utility;
+#include maps\mp\zombies\_zm_weapons;
+#include maps\mp\zombies\_zm_melee_weapon;
+#include maps\mp\zombies\_zm_weap_claymore;
+#include maps\mp\zombies\_zm_weap_ballistic_knife;
+#include maps\mp\zombies\_zm_equipment;
+#include maps\mp\zombies\_zm_magicbox;
 
 main()
 {
-	replaceFunc( common_scripts/utility::struct_class_init, ::struct_class_init_override );
+	replaceFunc( common_scripts\utility::struct_class_init, ::struct_class_init_override );
 }
 
 struct_class_init_override()
@@ -140,20 +140,10 @@ register_perk_struct( perk_name, perk_model, perk_angles, perk_coordinates )
 	perk_struct.angles = perk_angles;
 	perk_struct.origin = perk_coordinates;
 	perk_struct.targetname = "zm_perk_machine";
-	// if ( perk_name == "specialty_weapupgrade" )
-	// {
-	// 	perk_struct.target = "weapupgrade_flag_targ";
-	// 	flag = spawnStruct();
-	// 	flag.targetname = "weapupgrade_flag_targ";
-	// 	flag.model = "zombie_sign_please_wait";
-	// 	flag.angles = ( 0, perk_angles[ 1 ] - 180, perk_angles[ 2 ] - 180 );
-	// 	flag.origin = ( perk_coordinates[ 0 ] + 13.5, perk_coordinates[ 1 ] - 29, perk_coordinates[ 2 ] + 49.5 );
-	// 	add_struct( flag );
-	// }
 	add_struct( perk_struct );
 }
 
-register_map_initial_spawnpoint( spawnpoint_coordinates, spawnpoint_angles ) //custom function
+register_map_initial_spawnpoint( spawnpoint_coordinates, spawnpoint_angles )
 {
 	spawnpoint_struct = spawnStruct();
 	spawnpoint_struct.origin = spawnpoint_coordinates;
@@ -227,30 +217,30 @@ wallbuy( weapon_angles, weapon_coordinates, chalk_fx, weapon_name, weapon_model,
 	unitrigger_stub.require_look_at = 1;
 	unitrigger_stub.require_look_from = 0;
 	unitrigger_stub.zombie_weapon_upgrade = weapon_name;
-	maps/mp/zombies/_zm_unitrigger::unitrigger_force_per_player_triggers( unitrigger_stub, 1 );
+	maps\mp\zombies\_zm_unitrigger::unitrigger_force_per_player_triggers( unitrigger_stub, 1 );
 	if ( is_melee_weapon( weapon_name ) )
 	{
 		if ( weapon_name == "tazer_knuckles_zm" && isDefined( level.taser_trig_adjustment ) )
 		{
 			unitrigger_stub.origin += level.taser_trig_adjustment;
 		}
-		maps/mp/zombies/_zm_unitrigger::register_static_unitrigger( unitrigger_stub, ::melee_weapon_think );
+		maps\mp\zombies\_zm_unitrigger::register_static_unitrigger( unitrigger_stub, ::melee_weapon_think );
 	}
 	else if ( weapon_name == "claymore_zm" )
 	{
 		unitrigger_stub.prompt_and_visibility_func = ::claymore_unitrigger_update_prompt;
-		maps/mp/zombies/_zm_unitrigger::register_static_unitrigger( unitrigger_stub, ::buy_claymores );
+		maps\mp\zombies\_zm_unitrigger::register_static_unitrigger( unitrigger_stub, ::buy_claymores );
 	}
 	else
 	{
 		unitrigger_stub.prompt_and_visibility_func = ::wall_weapon_update_prompt;
-		maps/mp/zombies/_zm_unitrigger::register_static_unitrigger( unitrigger_stub, ::weapon_spawn_think );
+		maps\mp\zombies\_zm_unitrigger::register_static_unitrigger( unitrigger_stub, ::weapon_spawn_think );
 	}
 	tempmodel delete();
 	thread playchalkfx( chalk_fx, weapon_coordinates, weapon_angles );
 }
 
-playchalkfx( effect, origin, angles ) //custom function
+playchalkfx( effect, origin, angles )
 {
 	while ( 1 )
 	{
@@ -261,7 +251,7 @@ playchalkfx( effect, origin, angles ) //custom function
 	}
 }
 
-barrier( barrier_coordinates, barrier_model, barrier_angles, not_solid ) //custom function
+barrier( barrier_coordinates, barrier_model, barrier_angles, not_solid )
 {
 	if ( !isDefined( level.survival_barriers ) )
 	{

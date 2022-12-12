@@ -1,13 +1,13 @@
-#include maps/mp/_utility;
-#include maps/mp/zombies/_zm_utility;
-#include common_scripts/utility;
+#include maps\mp\_utility;
+#include maps\mp\zombies\_zm_utility;
+#include common_scripts\utility;
 
 common_init()
 {
 	level.create_spawner_list_func = ::create_spawner_list;
 	level.enemy_location_override_func = ::enemy_location_override;
 	flag_wait( "initial_blackscreen_passed" );
-	maps/mp/zombies/_zm_game_module::turn_power_on_and_open_doors();
+	maps\mp\zombies\_zm_game_module::turn_power_on_and_open_doors();
 	flag_wait( "start_zombie_round_logic" );
 	wait 1;
 	level notify( "revive_on" );
@@ -38,7 +38,7 @@ enemy_location_override( zombie, enemy )
 	return location;
 }
 
-create_spawner_list( zkeys ) //modified function
+create_spawner_list( zkeys )
 {
 	level.zombie_spawn_locations = [];
 	level.inert_locations = [];
