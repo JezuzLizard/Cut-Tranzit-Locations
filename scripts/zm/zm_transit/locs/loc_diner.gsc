@@ -27,7 +27,7 @@ struct_init()
 	gameObjects = getEntArray( "script_model", "classname" );
 	foreach ( object in gameObjects )
 	{
-		if ( object.script_gameobjectname == "zcleansed zturned" )
+		if ( isDefined( object.script_gameobjectname ) && object.script_gameobjectname == "zcleansed zturned" )
 		{
 			object.script_gameobjectname = "zstandard zgrief zcleansed zturned";
 		}
@@ -48,15 +48,12 @@ precache()
 	collision = spawn( "script_model", start_chest_zbarrier.origin );
 	collision.angles = start_chest_zbarrier.angles;
 	collision setmodel( "collision_clip_32x32x128" );
-	collision disconnectpaths();
 	collision = spawn( "script_model", start_chest_zbarrier.origin - ( 32, 0, 0 ) );
 	collision.angles = start_chest_zbarrier.angles;
 	collision setmodel( "collision_clip_32x32x128" );
-	collision disconnectpaths();
 	collision = spawn( "script_model", start_chest_zbarrier.origin + ( 32, 0, 0 ) );
 	collision.angles = start_chest_zbarrier.angles;
 	collision setmodel( "collision_clip_32x32x128" );
-	collision disconnectpaths();
 	level.chests = [];
 	level.chests[ 0 ] = normalChests[ 3 ];
 	level.chests[ 1 ] = start_chest;
@@ -102,6 +99,5 @@ init_barriers()
 	precacheModel( "zm_collision_transit_diner_survival" );
 	collision = spawn( "script_model", ( -5000, -6700, 0 ), 1 );
 	collision setmodel( "zm_collision_transit_diner_survival" );
-	collision disconnectpaths();
 }
 

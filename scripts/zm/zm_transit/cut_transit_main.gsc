@@ -31,7 +31,7 @@ main()
 			door_ents = getEntArray( "zombie_door", "targetname" );
 			foreach ( door in door_ents )
 			{
-				if ( door.script_noteworthy == "electric_door" )
+				if ( isDefined( door.script_noteworthy ) && door.script_noteworthy == "electric_door" )
 				{
 					door.script_noteworthy = "electric_buyable_door";
 				}
@@ -45,7 +45,7 @@ main()
 			gameObjects = getEntArray( "script_model", "classname" );
 			foreach ( object in gameObjects )
 			{
-				if ( object.script_gameobjectname == "zcleansed zturned" )
+				if ( isDefined( object.script_gameobjectname ) && object.script_gameobjectname == "zcleansed zturned" )
 				{
 					object.script_gameobjectname = "zstandard zgrief zcleansed zturned";
 				}
@@ -101,4 +101,7 @@ init_override()
 	scripts\zm\_gametype_setup::add_struct_location_gamemode_func( "zstandard", "tunnel", scripts\zm\zm_transit\locs\loc_tunnel::struct_init );
 	scripts\zm\_gametype_setup::add_struct_location_gamemode_func( "zstandard", "power", scripts\zm\zm_transit\locs\loc_power::struct_init );
 	scripts\zm\_gametype_setup::add_struct_location_gamemode_func( "zstandard", "cornfield", scripts\zm\zm_transit\locs\loc_cornfield::struct_init );
+
+	scripts\zm\_gametype_setup::add_zone_location_func( "power", scripts\zm\zm_transit\locs\loc_power::enable_zones );
+	scripts\zm\_gametype_setup::add_zone_location_func( "tunnel", scripts\zm\zm_transit\locs\loc_tunnel::enable_zones );	
 }

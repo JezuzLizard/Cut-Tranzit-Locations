@@ -51,15 +51,12 @@ precache()
 	collision = spawn( "script_model", start_chest_zbarrier.origin );
 	collision.angles = start_chest_zbarrier.angles;
 	collision setmodel( "collision_clip_32x32x128" );
-	collision disconnectpaths();
 	collision = spawn( "script_model", start_chest_zbarrier.origin - ( 32, 0, 0 ) );
 	collision.angles = start_chest_zbarrier.angles;
 	collision setmodel( "collision_clip_32x32x128" );
-	collision disconnectpaths();
 	collision = spawn( "script_model", start_chest_zbarrier.origin + ( 32, 0, 0 ) );
 	collision.angles = start_chest_zbarrier.angles;
 	collision setmodel( "collision_clip_32x32x128" );
-	collision disconnectpaths();
 	level.chests = [];
 	level.chests[ 0 ] = normalChests[ 2 ];
 	level.chests[ 1 ] = start_chest;
@@ -67,10 +64,10 @@ precache()
 
 enable_zones()
 {
-	zone_init( "zone_pow" );
-	enable_zone( "zone_pow" );
-	zone_init( "zone_pow_warehouse" );
-	enable_zone( "zone_pow_warehouse" );
+	zones = []; 
+	zones[ 0 ] = "zone_pow";
+	zones[ 1 ] = "zone_pow_warehouse";
+	return zones;
 }
 
 power_main()
