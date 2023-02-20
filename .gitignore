@@ -2,3 +2,5 @@ build/
 .vscode/
 *.exe
 compiled/
+decompiled/
+decompile_scripts.bat

@@ -18,19 +18,17 @@ struct_init()
 		scripts\zm\_gametype_setup::register_perk_struct( "specialty_scavenger", "zombie_vending_tombstone", ( 0, -4, 0 ), ( 11156, 8120, -575 ) );
 		scripts\zm\_gametype_setup::register_perk_struct( "specialty_fastreload", "zombie_vending_sleight", ( 0, -1, 0 ), ( 11568, 7723, -755 ) );
 	}
-	level.trash_spawns = getDvarIntDefault( "grief_use_trash_spawns_power", 0 );
+	/*
 	if ( !is_true( level.trash_spawns ) )
 	{
 		coordinates = array( ( 11288, 7988, -550 ), ( 11284, 7760, -549 ), ( 10784, 7623, -584 ), ( 10866, 7473, -580 ),
 							( 10261, 8146, -580 ), ( 10595, 8055, -541 ), ( 10477, 7679, -567 ), ( 10165, 7879, -570 ) );
 		angles = array( ( 0, -137, 0 ), ( 0, 177, 0 ), ( 0, -10, 0 ), ( 0, 21, 0 ), ( 0, -31, 0 ), ( 0, -43, 0 ), ( 0, -9, 0 ), ( 0, -15, 0 ) );
 	}
-	else 
-	{
-		coordinates = array( ( 11257, 8233, -487 ), ( 11403, 8245, -487 ), ( 11381, 8374, -487), ( 11269, 8360, -487 ),
-							( 10871, 8433, -407 ), ( 10852, 8230, -407 ), ( 10641, 8228, -407 ), ( 10655, 8431, -407 ) );
-		angles = array( ( 0, -137, 0 ), ( 0, 177, 0 ), ( 0, -10, 0 ), ( 0, 21, 0 ), ( 0, -31, 0 ), ( 0, -43, 0 ), ( 0, -9, 0 ), ( 0, -15, 0 ) );
-	}
+	*/
+	coordinates = array( ( 11257, 8233, -487 ), ( 11403, 8245, -487 ), ( 11381, 8374, -487), ( 11269, 8360, -487 ),
+						( 10871, 8433, -407 ), ( 10852, 8230, -407 ), ( 10641, 8228, -407 ), ( 10655, 8431, -407 ) );
+	angles = array( ( 0, -137, 0 ), ( 0, 177, 0 ), ( 0, -10, 0 ), ( 0, 21, 0 ), ( 0, -31, 0 ), ( 0, -43, 0 ), ( 0, -9, 0 ), ( 0, -15, 0 ) );
 	for ( i = 0; i < coordinates.size; i++ )
 	{
 		scripts\zm\_gametype_setup::register_map_initial_spawnpoint( coordinates[ i ], angles[ i ] );

@@ -23,6 +23,18 @@
 
 main()
 {
+	if ( !isDefined( level.ctsm_disable_custom_perk_locations ) )
+	{
+		level.ctsm_disable_custom_perk_locations = getDvarInt( "ctl_no_perks" ) == 1;
+	}
+	if ( !isDefined( level.ctl_disable_mystery_box ) )
+	{
+		level.ctl_disable_mystery_box = getDvarInt( "ctl_no_magicbox" ) == 1;
+	}
+	if ( !isDefined( level.no_board_repair ) )
+	{
+		level.no_board_repair = getDvarInt( "ctl_no_boardrepair" ) == 1;
+	}
 	replaceFunc( maps\mp\zm_transit_gamemodes::init, ::init_override );
 	location = getDvar( "ui_zm_mapstartlocation" );
 	switch ( location )
@@ -70,6 +82,11 @@ init()
 		default:
 			break;
 	}
+	flag_wait( "initial_blackscreen_passed" );
+	if ( level.ctl_disable_mystery_box )
+	{
+		level thread kill_start_chest();
+	}
 }
 
 init_override()
@@ -104,4 +121,17 @@ init_override()
 
 	scripts\zm\_gametype_setup::add_zone_location_func( "power", scripts\zm\zm_transit\locs\loc_power::enable_zones );
 	scripts\zm\_gametype_setup::add_zone_location_func( "tunnel", scripts\zm\zm_transit\locs\loc_tunnel::enable_zones );	
+	scripts\zm\_gametype_setup::add_zone_location_func( "diner", scripts\zm\zm_transit\locs\loc_diner::enable_zones );	
+}
+
+kill_start_chest()
+{
+	flag_wait( "initial_blackscreen_passed" );
+	wait 2;
+	foreach ( chest in level.chests )
+	{
+		chest maps\mp\zombies\_zm_magicbox::hide_chest( 0 );
+		chest notify( "kill_chest_think" );
+		wait 0.05;
+	}
 }

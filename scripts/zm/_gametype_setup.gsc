@@ -17,6 +17,43 @@ main()
 	replaceFunc( maps\mp\zombies\_zm_zonemgr::manage_zones, ::manage_zones_override );
 }
 
+init()
+{
+	level thread on_player_connect();
+}
+
+on_player_connect()
+{
+	level endon( "end_game" );
+	while ( true )
+	{
+		level waittill( "connected", player );
+		//level.player_out_of_playable_area_monitor = false;
+		player thread print_origin();
+	}
+}
+
+print_origin()
+{
+	self endon( "disconnect" );
+	while ( true )
+	{
+		wait 0.05;
+		if ( getDvarInt( "ctl_debug" ) == 0 )
+		{
+			continue;
+		}
+		if ( self meleeButtonPressed() )
+		{
+			logprint( "origin: " + self.origin + "\n" );
+			logprint( "angles: " + self.angles + "\n" );
+			logprint( "anglestoforward: " + anglesToForward( self.angles ) + "\n" );
+			while ( self meleeButtonPressed() )
+				wait 0.05;
+		}
+	}
+}
+
 struct_class_init_override()
 {
 	level.struct_class_names = [];
@@ -392,7 +429,6 @@ manage_zones_override( initial_zone )
 		location_zones = level.location_zones[ location ];
 		for ( i = 0; i < location_zones.size; i++ )
 		{
-			print( "zone: " + location_zones[ i ] );
 			zone_init( location_zones[ i ] );
 			enable_zone( location_zones[ i ] );
 		}
@@ -413,6 +449,11 @@ manage_zones_override( initial_zone )
 #/
 		zone_init( initial_zone );
 		enable_zone( initial_zone );
+	}
+
+	if ( isDefined( level.location_zones_func ) )
+	{
+		level [[ level.location_zones_func ]]();
 	}
 
 	setup_zone_flag_waits();
